@@ -36,6 +36,26 @@ void station::baisse_passager(int n) {
 	this->nb_passager -= n;
 }
 
+const int metro::get_passager_dedans() {
+	return this->nb_passager_dedans;
+}
+
+const int metro::get_position() {
+	return this->position;
+}
+
+const int metro::get_station() {
+	return this->station;
+}
+
+const int metro::get_vitesse() {
+	return this->vitesse;
+}
+
+const int metro::get_prochain_arret() {
+	return this->prochain_arret;
+}
+
 int main()
 {
 	cout << "Hello CMake." << endl;

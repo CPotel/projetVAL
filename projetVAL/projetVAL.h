@@ -42,7 +42,7 @@ class metro {
 public:
     //creation des getters
     const int get_passager_dedans();
-    const int prochain_arret();
+    const int get_prochain_arret();
     const int get_vitesse();
     const int get_position();
     const int get_station();
