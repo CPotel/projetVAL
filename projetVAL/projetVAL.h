@@ -10,6 +10,19 @@
 
 class station {
 public:
+
+    station(int nb_passagers = 0, bool trains_present = false, int num_station = 1){
+        nb_passager = nb_passagers;
+        train_present = trains_present;
+        if (num_station != 0) {
+            numero_station = num_station;
+        }
+        else {
+            std::cout<<"ERROR : Station number is 0"<<std::endl;
+            exit(0);
+        }
+    }
+
     //Creation des getters
     const int get_passager();
     const int get_nom();
@@ -33,6 +46,15 @@ private:
 
 class metro {
 public:
+
+    metro(int passagers = 0, int arret_suiv = 1, int speed = 0, int pos = 0, int station_actu = 0) {
+        nb_passager_dedans = passagers;
+        prochain_arret = arret_suiv;
+        vitesse = speed;
+        position = pos;
+        station = station_actu;
+    }
+
     //creation des getters
     const int get_passager_dedans();
     const int get_prochain_arret();
