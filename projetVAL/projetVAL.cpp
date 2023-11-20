@@ -82,6 +82,7 @@ void metro::arrivee_station() {
 }
 void metro::depart_station() {
 	this->station = 0; //0 équivaut à être en dehors d'une station;
+	acceleration(1); //Creation du départ A MODIFIER
 }
 int main()
 {
