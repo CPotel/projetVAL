@@ -27,7 +27,7 @@ public:
     void arrivage_train();
 
     //Fonction de baisse de passager
-    void baisse_passager(n);
+    void baisse_passager(int n);
 
     //Fonction depart d'un train
     void depart_train();
