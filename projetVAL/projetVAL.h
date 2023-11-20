@@ -47,7 +47,7 @@ private:
 class metro {
 public:
 
-    metro(int passagers = 0, int arret_suiv = 1, int speed = 0, int pos = 0, int station_actu = 0, int numero_metro) {
+    metro(int passagers = 0, int arret_suiv = 1, int speed = 0, int pos = 0, int station_actu = 0, int numero_metro = 1) {
         nb_passager_dedans = passagers;
         prochain_arret = arret_suiv;
         vitesse = speed;
