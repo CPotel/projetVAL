@@ -47,12 +47,14 @@ public:
     const int get_position();
     const int get_station();
 
-    //creation des setters :
+    //creation des setters et changeurs de variables:
+    void set_passager_dedans(int n);
+    void set_position(int pos);
+
     void acceleration(int n);
     void freinage(int n);
-    void baisse_passager(int n);
-    void hausse_passager(int n);
-    void changement_position(int pos);
+    void baisse_passager_dedans(int n);
+    void hausse_passager_dedans(int n);
     void arrivee_station(); //Change la variable station et prochain_arret
     void depart_station();
 

@@ -56,6 +56,33 @@ const int metro::get_prochain_arret() {
 	return this->prochain_arret;
 }
 
+//Setters de la classe metro
+
+void metro::acceleration(int n) {
+	this->vitesse += n;
+}
+void metro::freinage(int n) {
+	this->vitesse -= n;
+}
+void metro::baisse_passager_dedans(int n) {
+	this->nb_passager_dedans -= n;
+}
+void metro::set_passager_dedans(int n) {
+	this->nb_passager_dedans = n;
+}
+void metro::hausse_passager_dedans(int n) {
+	this->nb_passager_dedans += n;
+}
+void metro::set_position(int pos) {
+	this->position = pos;
+}
+void metro::arrivee_station() {
+	this->station = this->prochain_arret;
+	//Réaliser prochain arret
+}
+void metro::depart_station() {
+	this->station = 0; //0 équivaut à être en dehors d'une station;
+}
 int main()
 {
 	cout << "Hello CMake." << endl;
