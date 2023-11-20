@@ -10,8 +10,8 @@ using namespace std;
 const int station::get_passager(){
 	return this->nb_passager;
 }
-const std::string station::get_nom() {
-	return this->nom_station;
+const int station::get_nom() {
+	return this->numero_station;
 }
 const bool station::is_a_train() {
 	return this->train_present;
