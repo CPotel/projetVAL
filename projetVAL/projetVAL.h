@@ -18,9 +18,9 @@
 class station {
 public:
     //Creation des getters
-    int get_passager();
-    int get_nom();
-    bool is_a_train();
+    const int get_passager();
+    const std::string get_nom();
+    const bool is_a_train();
 
     //Creation des setters
     void set_passager(int n);
