@@ -47,12 +47,13 @@ private:
 class metro {
 public:
 
-    metro(int passagers = 0, int arret_suiv = 1, int speed = 0, int pos = 0, int station_actu = 0) {
+    metro(int passagers = 0, int arret_suiv = 1, int speed = 0, int pos = 0, int station_actu = 0, int numero_metro) {
         nb_passager_dedans = passagers;
         prochain_arret = arret_suiv;
         vitesse = speed;
         position = pos;
         station = station_actu;
+        numero_train = numero_metro;
     }
 
     //creation des getters
@@ -61,6 +62,7 @@ public:
     const int get_vitesse();
     const int get_position();
     const int get_station();
+    const int get_numero_train();
 
     //creation des setters et changeurs de variables:
     void set_passager_dedans(int n);
@@ -73,6 +75,7 @@ public:
     void arrivee_station(); //Change la variable station et prochain_arret
     void depart_station();
 
+
 private:
     int nb_passager_dedans;
     int prochain_arret; //Numero de la prochaine
@@ -80,5 +83,5 @@ private:
     int vitesse;
     int position; //pourcentage entre l'ancienne station et la suivante
     int station; //0 si pas dans une station, num station si dans une station
-
+    int numero_train;
 };

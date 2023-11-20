@@ -55,7 +55,9 @@ const int metro::get_vitesse() {
 const int metro::get_prochain_arret() {
 	return this->prochain_arret;
 }
-
+const int metro::get_numero_train() {
+	return this->numero_train;
+}
 //Setters de la classe metro
 
 void metro::acceleration(int n) {
