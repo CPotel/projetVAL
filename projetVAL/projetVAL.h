@@ -11,7 +11,7 @@
 class station {
 public:
 
-    station(int nb_passagers = 0, bool trains_present = false, int num_station = 1){
+    station(int num_station = 1, int nb_passagers = 0, bool trains_present = false) {
         nb_passager = nb_passagers;
         train_present = trains_present;
         if (num_station != 0) {

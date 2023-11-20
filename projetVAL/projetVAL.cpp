@@ -86,8 +86,14 @@ void metro::depart_station() {
 	this->station = 0; //0 équivaut à être en dehors d'une station;
 	acceleration(1); //Creation du départ A MODIFIER
 }
+
+
 int main()
 {
-	cout << "Hello CMake." << endl;
-	return 0;
+	//Initialisation liste de stations
+	vector<station> liste_station;
+	//Instalation de stations de métro dans notre système
+	for (int i = 1; i < 20; i++) {
+		liste_station.push_back(station(i));
+	}
 }
