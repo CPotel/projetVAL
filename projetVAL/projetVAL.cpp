@@ -4,6 +4,7 @@
 #include "projetVAL.h"
 #include <thread>
 #include <chrono>
+#include <random>
 
 using namespace std;
 
@@ -92,19 +93,20 @@ void metro::depart_station() {
 
 int main()
 {
+	std::default_random_engine re(time(0));
 	//Initialisation liste de stations
-	vector<station> liste_station;
 	//Instalation de stations de métro dans notre système
 	//test thread
-	station CHU = station(1);
-	liste_station.push_back(CHU);
 	bool stopped = false;
 	std::jthread thr(
-		[&stopped]
+		[&stopped, &re]
 		{
+			vector<station> liste_station;
+			station CHU = station(1, 30, false);
+			liste_station.push_back(CHU);
 			metro rame1 = metro(25, 1, 0, 0, 0, 1);
 			cout << "Rame prete" << endl;
-			rame1.acceleration(7);
+			rame1.acceleration(10);
 			cout << "Rame partie de la station de lancement" << endl;
 			while (!stopped) {
 				std::this_thread::sleep_for(1s);
@@ -118,7 +120,19 @@ int main()
 					rame1.freinage(vit);
 					rame1.arrivee_station();
 					rame1.set_position(0);
-					cout << "Arrivee a la station numero " << rame1.get_station() << endl;
+					int stat_nom = rame1.get_station();
+					station stat_actu = liste_station.at(stat_nom - 1);
+					cout << "Arrivee a la station numero " << stat_nom << endl;
+					int passagers = rame1.get_passager_dedans();
+					int aquai = stat_actu.get_passager();
+					std::uniform_int_distribution<int> descente_pif{ 1, passagers };
+					int descente = descente_pif(re);
+					cout << "Descente de " << descente << " passagers" << endl;
+					rame1.baisse_passager_dedans(descente);
+					std::uniform_int_distribution<int> montee_pif{ 1,aquai };
+					int montee = montee_pif(re);
+					cout << "Montee de " << montee << " passagers" << endl;
+					rame1.hausse_passager_dedans(montee);
 					stopped = true;
 				}
 			}
