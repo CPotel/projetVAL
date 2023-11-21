@@ -2,6 +2,8 @@
 //
 
 #include "projetVAL.h"
+#include <thread>
+#include <chrono>
 
 using namespace std;
 
@@ -93,7 +95,32 @@ int main()
 	//Initialisation liste de stations
 	vector<station> liste_station;
 	//Instalation de stations de métro dans notre système
-	for (int i = 1; i < 20; i++) {
-		liste_station.push_back(station(i));
-	}
+	//test thread
+	station CHU = station(1);
+	liste_station.push_back(CHU);
+	bool stopped = false;
+	std::jthread thr(
+		[&stopped]
+		{
+			metro rame1 = metro(25, 1, 0, 0, 0, 1);
+			cout << "Rame prete" << endl;
+			rame1.acceleration(7);
+			cout << "Rame partie de la station de lancement" << endl;
+			while (!stopped) {
+				std::this_thread::sleep_for(1s);
+				int pourcent = rame1.get_position();
+				if (pourcent <= 100) {
+					cout << "Progression de la rame :" << pourcent <<endl;
+					int vit = rame1.get_vitesse();
+					rame1.set_position(pourcent + vit);
+				}
+				else {
+					rame1.freinage(5);
+					rame1.arrivee_station();
+					cout << "Arrivee a la station numero " << rame1.get_station() << endl;
+					stopped = true;
+				}
+			}
+		}
+		);
 }

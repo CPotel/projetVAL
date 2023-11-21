@@ -9,8 +9,12 @@
 #include <algorithm>
 
 class station {
-public:
+private:
+    int nb_passager;
+    int numero_station; //std::string nom_station;
+    bool train_present;
 
+public:
     station(int num_station = 1, int nb_passagers = 0, bool trains_present = false) {
         nb_passager = nb_passagers;
         train_present = trains_present;
@@ -37,14 +41,18 @@ public:
 
     //Fonction depart d'un train
     void depart_train();
-
-private:
-    int nb_passager;
-    int numero_station; //std::string nom_station;
-    bool train_present;
 };
 
 class metro {
+private:
+    int nb_passager_dedans;
+    int prochain_arret; //Numero de la prochaine
+    //Si on a le temps : problème technique
+    int vitesse;
+    int position; //pourcentage entre l'ancienne station et la suivante
+    int station; //0 si pas dans une station, num station si dans une station
+    int numero_train;
+
 public:
 
     metro(int passagers = 0, int arret_suiv = 1, int speed = 0, int pos = 0, int station_actu = 0, int numero_metro = 1) {
@@ -74,14 +82,4 @@ public:
     void hausse_passager_dedans(int n);
     void arrivee_station(); //Change la variable station et prochain_arret
     void depart_station();
-
-
-private:
-    int nb_passager_dedans;
-    int prochain_arret; //Numero de la prochaine
-    //Si on a le temps : problème technique
-    int vitesse;
-    int position; //pourcentage entre l'ancienne station et la suivante
-    int station; //0 si pas dans une station, num station si dans une station
-    int numero_train;
 };
