@@ -10,3 +10,12 @@ if (CMAKE_VERSION VERSION_GREATER 3.12)
 endif()
 
 # TODO: Ajoutez des tests et installez des cibles si nécessaire.
+
+target_link_libraries(projetVAL ${CMAKE_SOURCE_DIR}/lib/sfml-audio.lib)
+target_link_libraries(projetVAL ${CMAKE_SOURCE_DIR}/lib/sfml-graphics.lib)
+target_link_libraries(projetVAL ${CMAKE_SOURCE_DIR}/lib/sfml-main.lib)
+target_link_libraries(projetVAL ${CMAKE_SOURCE_DIR}/lib/sfml-network.lib)
+target_link_libraries(projetVAL ${CMAKE_SOURCE_DIR}/lib/sfml-system.lib)
+target_link_libraries(projetVAL ${CMAKE_SOURCE_DIR}/lib/sfml-window.lib)
+
+include_directories(${CMAKE_SOURCE_DIR}/include)
