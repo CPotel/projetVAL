@@ -97,13 +97,13 @@ int main()
 	//Initialisation liste de stations
 	//Instalation de stations de métro dans notre système
 	//test thread
+	vector<station> liste_station;
+	station CHU = station(1, 30, false);
+	liste_station.push_back(CHU);
 	bool stopped = false;
 	std::jthread thr(
-		[&stopped, &re]
+		[&stopped, &re, &liste_station]
 		{
-			vector<station> liste_station;
-			station CHU = station(1, 30, false);
-			liste_station.push_back(CHU);
 			metro rame1 = metro(25, 1, 0, 0, 0, 1);
 			cout << "Rame prete" << endl;
 			rame1.acceleration(10);
