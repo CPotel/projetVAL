@@ -109,14 +109,15 @@ int main()
 			while (!stopped) {
 				std::this_thread::sleep_for(1s);
 				int pourcent = rame1.get_position();
-				if (pourcent <= 100) {
+				int vit = rame1.get_vitesse();
+				if (pourcent < 100) {
 					cout << "Progression de la rame :" << pourcent <<endl;
-					int vit = rame1.get_vitesse();
 					rame1.set_position(pourcent + vit);
 				}
 				else {
-					rame1.freinage(5);
+					rame1.freinage(vit);
 					rame1.arrivee_station();
+					rame1.set_position(0);
 					cout << "Arrivee a la station numero " << rame1.get_station() << endl;
 					stopped = true;
 				}
