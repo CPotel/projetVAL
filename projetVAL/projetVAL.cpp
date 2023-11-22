@@ -2,7 +2,11 @@
 //
 
 #include "projetVAL.h"
+
 #include <SFML/Graphics.hpp>
+#include <thread>
+#include <chrono>
+#include <random>
 using namespace std;
 
 
@@ -90,9 +94,10 @@ void metro::depart_station() {
 
 int main()
 {
+	std::default_random_engine re(time(0));
 	//Initialisation liste de stations
-	vector<station> liste_station;
 	//Instalation de stations de métro dans notre système
+  vector<station> liste_station;
 	for (int i = 1; i < 20; i++) {
 		liste_station.push_back(station(i));
 	}
@@ -118,4 +123,44 @@ int main()
 	}
 
 	return 0;
+	//test thread
+	vector<station> liste_station;
+	bool stopped = false;
+	std::jthread thr(
+		[&stopped, &re, &liste_station]
+		{
+			metro rame1 = metro(25, 1, 0, 0, 0, 1);
+			cout << "Rame prete" << endl;
+			rame1.acceleration(10);
+			cout << "Rame partie de la station de lancement" << endl;
+			while (!stopped) {
+				std::this_thread::sleep_for(1s);
+				int pourcent = rame1.get_position();
+				int vit = rame1.get_vitesse();
+				if (pourcent < 100) {
+					cout << "Progression de la rame :" << pourcent <<endl;
+					rame1.set_position(pourcent + vit);
+				}
+				else {
+					rame1.freinage(vit);
+					rame1.arrivee_station();
+					rame1.set_position(0);
+					int stat_nom = rame1.get_station();
+					station stat_actu = liste_station.at(stat_nom - 1);
+					cout << "Arrivee a la station numero " << stat_nom << endl;
+					int passagers = rame1.get_passager_dedans();
+					int aquai = stat_actu.get_passager();
+					std::uniform_int_distribution<int> descente_pif{ 1, passagers };
+					int descente = descente_pif(re);
+					cout << "Descente de " << descente << " passagers" << endl;
+					rame1.baisse_passager_dedans(descente);
+					std::uniform_int_distribution<int> montee_pif{ 1,aquai };
+					int montee = montee_pif(re);
+					cout << "Montee de " << montee << " passagers" << endl;
+					rame1.hausse_passager_dedans(montee);
+					stopped = true;
+				}
+			}
+		}
+		);
 }
