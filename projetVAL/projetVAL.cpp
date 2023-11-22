@@ -99,34 +99,12 @@ int main()
 	//Instalation de stations de métro dans notre système
   vector<station> liste_station;
 	for (int i = 1; i < 20; i++) {
-		liste_station.push_back(station(i));
+		liste_station.push_back(station(i, 10));
 	}
 
-
-
-	sf::RenderWindow window(sf::VideoMode(1000, 1000), "Visualisation du métro Lillois");
-	sf::CircleShape shape(100.f);
-	shape.setFillColor(sf::Color::Green);
-
-	while (window.isOpen())
-	{
-		sf::Event event;
-		while (window.pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed)
-				window.close();
-		}
-
-		window.clear();
-			window.draw(shape);
-			window.display();
-	}
-
-	return 0;
 	//test thread
-	vector<station> liste_station;
 	bool stopped = false;
-	std::jthread thr(
+	std::jthread rame1(
 		[&stopped, &re, &liste_station]
 		{
 			metro rame1 = metro(25, 1, 0, 0, 0, 1);
@@ -138,7 +116,7 @@ int main()
 				int pourcent = rame1.get_position();
 				int vit = rame1.get_vitesse();
 				if (pourcent < 100) {
-					cout << "Progression de la rame :" << pourcent <<endl;
+					cout << "Progression de la rame :" << pourcent << endl;
 					rame1.set_position(pourcent + vit);
 				}
 				else {
@@ -162,5 +140,23 @@ int main()
 				}
 			}
 		}
-		);
+	);
+
+	sf::RenderWindow window(sf::VideoMode(1000, 1000), "Visualisation du métro Lillois");
+	sf::CircleShape shape(100.f);
+	shape.setFillColor(sf::Color::Green);
+
+	while (window.isOpen())
+	{
+		sf::Event event;
+		while (window.pollEvent(event))
+		{
+			if (event.type == sf::Event::Closed)
+				window.close();
+		}
+
+		window.clear();
+		window.draw(shape);
+		window.display();
+	}
 }
