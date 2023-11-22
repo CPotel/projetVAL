@@ -7,6 +7,11 @@
 //#include <string>
 #include <vector>
 #include <algorithm>
+#include <SFML/Graphics.hpp>
+#include <thread>
+#include <chrono>
+#include <random>
+
 
 class station {
 private:

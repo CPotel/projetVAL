@@ -3,10 +3,7 @@
 
 #include "projetVAL.h"
 
-#include <SFML/Graphics.hpp>
-#include <thread>
-#include <chrono>
-#include <random>
+
 using namespace std;
 
 
