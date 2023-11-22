@@ -2,10 +2,11 @@
 //
 
 #include "projetVAL.h"
+
+#include <SFML/Graphics.hpp>
 #include <thread>
 #include <chrono>
 #include <random>
-
 using namespace std;
 
 
@@ -96,10 +97,34 @@ int main()
 	std::default_random_engine re(time(0));
 	//Initialisation liste de stations
 	//Instalation de stations de métro dans notre système
+  vector<station> liste_station;
+	for (int i = 1; i < 20; i++) {
+		liste_station.push_back(station(i));
+	}
+
+
+
+	sf::RenderWindow window(sf::VideoMode(1000, 1000), "Visualisation du métro Lillois");
+	sf::CircleShape shape(100.f);
+	shape.setFillColor(sf::Color::Green);
+
+	while (window.isOpen())
+	{
+		sf::Event event;
+		while (window.pollEvent(event))
+		{
+			if (event.type == sf::Event::Closed)
+				window.close();
+		}
+
+		window.clear();
+			window.draw(shape);
+			window.display();
+	}
+
+	return 0;
 	//test thread
 	vector<station> liste_station;
-	station CHU = station(1, 30, false);
-	liste_station.push_back(CHU);
 	bool stopped = false;
 	std::jthread thr(
 		[&stopped, &re, &liste_station]
