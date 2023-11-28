@@ -84,11 +84,20 @@ void metro::set_position(int pos) {
 }
 void metro::arrivee_station() {
 	this->station = this->prochain_arret;
-	//Réaliser prochain arret
+	if (!this->sens) {
+		this->prochain_arret = this->station + 1;
+	}
+	else {
+		this->prochain_arret = this->station - 1;
+	}
 }
-void metro::depart_station() {
+void metro::depart_station(int vit_depart) {
 	this->station = 0; //0 équivaut à être en dehors d'une station;
-	acceleration(1); //Creation du départ A MODIFIER
+	acceleration(vit_depart); //Creation du départ A MODIFIER
+}
+
+void metro::demi_tour() {
+	this->sens = !this->sens;
 }
 
 
@@ -98,7 +107,7 @@ int main()
 	//Initialisation liste de stations
 	//Instalation de stations de métro dans notre système
   vector<station> liste_station;
-	for (int i = 1; i < 20; i++) {
+	for (int i = 1; i < 10; i++) {
 		liste_station.push_back(station(i, 10));
 	}
 
@@ -116,7 +125,7 @@ int main()
 				int pourcent = rame1.get_position();
 				int vit = rame1.get_vitesse();
 				if (pourcent < 100) {
-					cout << "Progression de la rame :" << pourcent << endl;
+					cout << "Progression de la rame :" << pourcent << " %" << endl;
 					rame1.set_position(pourcent + vit);
 				}
 				else {
@@ -128,20 +137,28 @@ int main()
 					cout << "Arrivee a la station numero " << stat_nom << endl;
 					int passagers = rame1.get_passager_dedans();
 					int aquai = stat_actu.get_passager();
-					std::uniform_int_distribution<int> descente_pif{ 1, passagers };
-					int descente = descente_pif(re);
-					cout << "Descente de " << descente << " passagers" << endl;
-					rame1.baisse_passager_dedans(descente);
-					std::uniform_int_distribution<int> montee_pif{ 1,aquai };
-					int montee = montee_pif(re);
-					cout << "Montee de " << montee << " passagers" << endl;
-					rame1.hausse_passager_dedans(montee);
-					stopped = true;
+					if (stat_nom == liste_station.size()) {
+						cout << "Fin de trajet, preparation du demi-tour." << endl;
+						rame1.baisse_passager_dedans(passagers);
+						stopped = true;
+					}
+					else{
+						std::uniform_int_distribution<int> descente_pif{ 1, passagers };
+						int descente = descente_pif(re);
+						cout << "Descente de " << descente << " passagers" << endl;
+						rame1.baisse_passager_dedans(descente);
+						std::uniform_int_distribution<int> montee_pif{ 1,aquai };
+						int montee = montee_pif(re);
+						cout << "Montee de " << montee << " passagers" << endl;
+						rame1.hausse_passager_dedans(montee);
+						cout << "Depart de la rame de la station " << stat_nom << endl;
+						rame1.depart_station(vit);
+					}
 				}
 			}
 		}
 	);
-
+	/*
 	sf::RenderWindow window(sf::VideoMode(1000, 1000), "Visualisation du métro Lillois");
 	sf::CircleShape shape(100.f);
 	shape.setFillColor(sf::Color::Green);
@@ -159,4 +176,5 @@ int main()
 		window.draw(shape);
 		window.display();
 	}
+	*/
 }

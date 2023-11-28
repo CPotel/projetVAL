@@ -52,16 +52,18 @@ private:
     int position; //pourcentage entre l'ancienne station et la suivante
     int station; //0 si pas dans une station, num station si dans une station
     int numero_train;
+    bool sens; // si true, traverse les stations en sens inverse
 
 public:
 
-    metro(int passagers = 0, int arret_suiv = 1, int speed = 0, int pos = 0, int station_actu = 0, int numero_metro = 1) {
+    metro(int passagers = 0, int arret_suiv = 1, int speed = 0, int pos = 0, int station_actu = 0, int numero_metro = 1, bool sens_trajet = false) {
         nb_passager_dedans = passagers;
         prochain_arret = arret_suiv;
         vitesse = speed;
         position = pos;
         station = station_actu;
         numero_train = numero_metro;
+        sens = sens_trajet;
     }
 
     //creation des getters
@@ -81,5 +83,6 @@ public:
     void baisse_passager_dedans(int n);
     void hausse_passager_dedans(int n);
     void arrivee_station(); //Change la variable station et prochain_arret
-    void depart_station();
+    void depart_station(int vit_depart);
+    void demi_tour();
 };
