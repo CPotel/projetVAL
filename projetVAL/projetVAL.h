@@ -87,7 +87,7 @@ public:
     void freinage(int n);
     void baisse_passager_dedans(int n);
     void hausse_passager_dedans(int n);
-    void arrivee_station(); //Change la variable station et prochain_arret
+    void arrivee_station(int taille_ligne); //Change la variable station et prochain_arret
     void depart_station(int vit_depart);
     void demi_tour();
 };
