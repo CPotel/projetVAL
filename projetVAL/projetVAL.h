@@ -7,6 +7,10 @@
 //#include <string>
 #include <vector>
 #include <algorithm>
+#include <SFML/Graphics.hpp>
+#include <thread>
+#include <chrono>
+#include <random>
 
 class station {
 private:
@@ -73,6 +77,7 @@ public:
     const int get_position();
     const int get_station();
     const int get_numero_train();
+    const bool reverse();
 
     //creation des setters et changeurs de variables:
     void set_passager_dedans(int n);
