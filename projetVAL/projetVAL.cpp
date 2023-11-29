@@ -192,10 +192,48 @@ int main()
 			cout << "Rame 2 partie de la station de lancement avec " << rame2.get_passager_dedans() << " passagers" << endl;
 		}
 	);
-	/*
-	sf::RenderWindow window(sf::VideoMode(1000, 1000), "Visualisation du métro Lillois");
-	sf::CircleShape shape(100.f);
-	shape.setFillColor(sf::Color::Green);
+	sf::RenderWindow window(sf::VideoMode(1500, 800), "Visualisation du métro Lillois");
+
+
+	sf::Texture TextureGare;
+	sf::Sprite Gare1, Gare2, Gare3, Gare4, Gare5, Gare6, Gare7, Gare8, Gare9, Gare10;
+
+	if (!TextureGare.loadFromFile(std::string("C:/Program Files/SFML/img/gare.png")))
+	{
+		cerr << "Erreur pendant le chargement des images" << endl;
+		//return EXIT_FAILURE;
+	}
+	Gare1.setTexture(TextureGare);
+	Gare2.setTexture(TextureGare);
+	Gare3.setTexture(TextureGare);
+	Gare4.setTexture(TextureGare);
+	Gare5.setTexture(TextureGare);
+	Gare6.setTexture(TextureGare);
+	Gare7.setTexture(TextureGare);
+	Gare8.setTexture(TextureGare);
+	Gare9.setTexture(TextureGare);
+	Gare10.setTexture(TextureGare);
+
+	Gare1.setPosition(sf::Vector2f(25, 0));
+	Gare1.setScale(sf::Vector2f(0.25, 0.25));
+	Gare2.setPosition(sf::Vector2f(125, 200));
+	Gare2.setScale(sf::Vector2f(0.25, 0.25));
+	Gare3.setPosition(sf::Vector2f(275, 500));
+	Gare3.setScale(sf::Vector2f(0.25, 0.25));
+	Gare4.setPosition(sf::Vector2f(450, 650));
+	Gare4.setScale(sf::Vector2f(0.25, 0.25));
+	Gare5.setPosition(sf::Vector2f(650, 650));
+	Gare5.setScale(sf::Vector2f(0.25, 0.25));
+	Gare6.setPosition(sf::Vector2f(800, 500));
+	Gare6.setScale(sf::Vector2f(0.25, 0.25));
+	Gare7.setPosition(sf::Vector2f(900, 300));
+	Gare7.setScale(sf::Vector2f(0.25, 0.25));
+	Gare8.setPosition(sf::Vector2f(1000, 150));
+	Gare8.setScale(sf::Vector2f(0.25, 0.25));
+	Gare9.setPosition(sf::Vector2f(1200, 250));
+	Gare9.setScale(sf::Vector2f(0.25, 0.25));
+	Gare10.setPosition(sf::Vector2f(1350, 450));
+	Gare10.setScale(sf::Vector2f(0.25, 0.25));
 
 	while (window.isOpen())
 	{
@@ -206,9 +244,18 @@ int main()
 				window.close();
 		}
 
-		window.clear();
-		window.draw(shape);
+		window.clear(sf::Color(255, 255, 255));
+		window.draw(Gare1);
+		window.draw(Gare2);
+		window.draw(Gare3);
+		window.draw(Gare4);
+		window.draw(Gare5);
+		window.draw(Gare6);
+		window.draw(Gare7);
+		window.draw(Gare8);
+		window.draw(Gare9);
+		window.draw(Gare10);
 		window.display();
 	}
-	*/
+
 }
