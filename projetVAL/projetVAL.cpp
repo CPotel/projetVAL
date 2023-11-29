@@ -117,15 +117,15 @@ int main()
 		[&stopped, &re, &liste_station, &size]
 		{
 			metro rame1 = metro(25, 1, 0, 0, 0, 1); //création de la rame de metro
-			cout << "Rame prete" << endl;
+			cout << "Rame 1 prete" << endl;
 			rame1.acceleration(20); //départ de la rame de la zone de lancement
-			cout << "Rame partie de la station de lancement" << endl;
+			cout << "Rame 1 partie de la station de lancement avec " << rame1.get_passager_dedans() << " passagers." << endl;
 			while (!stopped) { //tant qu'on a pas arrêté
 				std::this_thread::sleep_for(1s); //attente d'1s pour simuler le déplacement de la rame
 				int pourcent = rame1.get_position();
 				int vit = rame1.get_vitesse(); //récupération de la position et de la vitesse de la rame
 				if (pourcent < 100) { //si elle n'a pas atteint la station
-					cout << "Progression de la rame :" << pourcent << " %" << endl; //affichage de sa progression
+					cout << "Progression de la rame 1 : " << pourcent << " %" << endl; //affichage de sa progression
 					rame1.set_position(pourcent + vit); //déplacement
 				}
 				else { //sinon
@@ -140,12 +140,15 @@ int main()
 					int aquai = stat_actu.get_passager(); //récupération du nombre de passagers à bord et à quai
 					if (stat_nom == liste_station.size() || (stat_nom ==1 && rame1.reverse())) { //si terminus
 						cout << "Fin de trajet, preparation du demi-tour." << endl;
-						cout << "Descente des " << passagers << " restants." << endl;
+						cout << "Descente des " << passagers << " passagers restants." << endl;
 						std::this_thread::sleep_for(passagers * 0.5s);
 						rame1.baisse_passager_dedans(passagers); //descente de tous les passagers
 						aquai += passagers;
 						stat_actu.set_passager(aquai);
 						rame1.demi_tour(); //demi tour
+						cout << "Passage par la voie de demi-tour." << endl;
+						std::this_thread::sleep_for(5s);
+						cout << "Demi-tour effectue." << endl;
 						std::uniform_int_distribution<int> montee_terminus{ 1, aquai };//montée de passagers
 						int montee = montee_terminus(re);
 						rame1.hausse_passager_dedans(montee);
@@ -178,6 +181,15 @@ int main()
 					}
 				}
 			}
+		}
+	);
+
+	std::jthread rame2(
+		[&stopped, &re, &liste_station, &size]
+		{
+			metro rame2(10, 1, 0, 0, 0, 2);
+			cout << "Rame 2 prete" << endl;
+			cout << "Rame 2 partie de la station de lancement avec " << rame2.get_passager_dedans() << " passagers" << endl;
 		}
 	);
 	/*
