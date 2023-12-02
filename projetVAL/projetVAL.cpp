@@ -203,6 +203,7 @@ int main()
 		cerr << "Erreur pendant le chargement des images" << endl;
 		//return EXIT_FAILURE;
 	}
+	//On mets à toutes les gares la même texture
 	Gare1.setTexture(TextureGare);
 	Gare2.setTexture(TextureGare);
 	Gare3.setTexture(TextureGare);
@@ -213,27 +214,27 @@ int main()
 	Gare8.setTexture(TextureGare);
 	Gare9.setTexture(TextureGare);
 	Gare10.setTexture(TextureGare);
-
+	//MaJ des positions et de la tailles des différentes gares
 	Gare1.setPosition(sf::Vector2f(25, 0));
-	Gare1.setScale(sf::Vector2f(0.25, 0.25));
+	Gare1.setScale(sf::Vector2f(0.1, 0.1));
 	Gare2.setPosition(sf::Vector2f(125, 200));
-	Gare2.setScale(sf::Vector2f(0.25, 0.25));
-	Gare3.setPosition(sf::Vector2f(275, 500));
-	Gare3.setScale(sf::Vector2f(0.25, 0.25));
+	Gare2.setScale(sf::Vector2f(0.1, 0.1));
+	Gare3.setPosition(sf::Vector2f(250, 500));
+	Gare3.setScale(sf::Vector2f(0.1, 0.1));
 	Gare4.setPosition(sf::Vector2f(450, 650));
-	Gare4.setScale(sf::Vector2f(0.25, 0.25));
+	Gare4.setScale(sf::Vector2f(0.1, 0.1));
 	Gare5.setPosition(sf::Vector2f(650, 650));
-	Gare5.setScale(sf::Vector2f(0.25, 0.25));
+	Gare5.setScale(sf::Vector2f(0.1, 0.1));
 	Gare6.setPosition(sf::Vector2f(800, 500));
-	Gare6.setScale(sf::Vector2f(0.25, 0.25));
+	Gare6.setScale(sf::Vector2f(0.1, 0.1));
 	Gare7.setPosition(sf::Vector2f(900, 300));
-	Gare7.setScale(sf::Vector2f(0.25, 0.25));
+	Gare7.setScale(sf::Vector2f(0.1, 0.1));
 	Gare8.setPosition(sf::Vector2f(1000, 150));
-	Gare8.setScale(sf::Vector2f(0.25, 0.25));
+	Gare8.setScale(sf::Vector2f(0.1, 0.1));
 	Gare9.setPosition(sf::Vector2f(1200, 250));
-	Gare9.setScale(sf::Vector2f(0.25, 0.25));
+	Gare9.setScale(sf::Vector2f(0.1, 0.1));
 	Gare10.setPosition(sf::Vector2f(1350, 450));
-	Gare10.setScale(sf::Vector2f(0.25, 0.25));
+	Gare10.setScale(sf::Vector2f(0.1, 0.1));
 
 	while (window.isOpen())
 	{
