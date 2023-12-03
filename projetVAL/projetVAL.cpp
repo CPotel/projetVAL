@@ -79,7 +79,7 @@ void metro::set_position(int pos) {
 }
 void metro::arrivee_station(int taille_ligne) {
 	this->station = this->prochain_arret;
-	if (!this->sens && this->station < taille_ligne) {
+	if ((!this->sens && this->station < taille_ligne) || (this->sens && this->station <= 1)) {
 		this->prochain_arret = this->station + 1;
 	}
 	else {
@@ -138,7 +138,7 @@ int main()
 					cout << "Arrivee a la station numero " << stat_nom << endl;
 					int passagers = rame1.get_passager_dedans();
 					int aquai = stat_actu.get_passager(); //récupération du nombre de passagers à bord et à quai
-					if (stat_nom == liste_station.size() || (stat_nom ==1 && rame1.reverse())) { //si terminus
+					if (stat_nom == liste_station.size() || (stat_nom == 1 && rame1.reverse())) { //si terminus
 						cout << "Fin de trajet, preparation du demi-tour." << endl;
 						cout << "Descente des " << passagers << " passagers restants." << endl;
 						std::this_thread::sleep_for(passagers * 0.5s);
