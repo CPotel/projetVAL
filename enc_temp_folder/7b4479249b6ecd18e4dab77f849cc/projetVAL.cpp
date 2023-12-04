@@ -321,9 +321,9 @@ int main()
 	Ligne2Gare9Gare10.rotate(320);
 	Ligne2Gare9Gare10.setFillColor(sf::Color(0, 0, 0));
 	//Les aller retours
-	/*AllerRetour1.setPosition(sf::Vector2f(100, 70));
+	AllerRetour1.setPosition(sf::Vector2f(100, 70));
 	AllerRetour1.setOutlineThickness(2);
-	AllerRetour1.setOutlineColor(sf::Color(0, 0, 0));*/
+	AllerRetour1.setOutlineColor(sf::Color(0, 0, 0));
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -335,8 +335,8 @@ int main()
 
 		window.clear(sf::Color(255, 255, 255));
 		//Affichage des gares et des lignes de metro
-		//window.draw(AllerRetour1);
-		//window.draw(AllerRetour2);
+		window.draw(AllerRetour1);
+		window.draw(AllerRetour2);
 		window.draw(Gare1);
 		window.draw(Gare2);
 		window.draw(Gare3);
