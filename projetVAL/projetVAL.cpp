@@ -35,6 +35,47 @@ void station::baisse_passager(int n) {
 	this->nb_passager -= n;
 }
 
+void station::ChangementTextureGare(const sf::Texture &Text) {
+	this->Gare.setTexture(Text);
+}
+
+void station::AffichageGare(sf::RenderWindow &Win) {
+	Win.draw(this->Gare);
+}
+
+void station::ChangementTailleGare(const sf::Vector2f &taille) {
+	this->Gare.setScale(taille);
+}
+
+void station::ChangementPositionGare(const sf::Vector2f &position) {
+	this->Gare.setPosition(position);
+}
+
+//Changement Taille Voie
+void station::ChangementTailleVoie1(const sf::Vector2f taille) {
+	this->voie1.setSize(taille);
+}
+void station::ChangementTailleVoie2(const sf::Vector2f taille) {
+	this->voie2.setSize(taille);
+}
+
+//RotationVoie
+void station::RotationVoie(const int n) {
+	this->voie1.rotate(n);
+	this->voie2.rotate(n);
+}
+
+//Changement Position Voie
+void station::ChangementPositionVoie1(const sf::Vector2f& pos) {
+	this->voie1.setPosition(pos);
+}
+void station::ChangementPositionVoie2(const sf::Vector2f& pos) {
+	this->voie2.setPosition(pos);
+}
+
+
+
+//Fonction du metro
 const int metro::get_passager_dedans() {
 	return this->nb_passager_dedans;
 }
@@ -262,7 +303,7 @@ int main()
 	
 
 	sf::Texture TextureGare;
-	sf::Sprite Gare1, Gare2, Gare3, Gare4, Gare5, Gare6, Gare7, Gare8, Gare9, Gare10;
+	//sf::Sprite Gare1, Gare2, Gare3, Gare4, Gare5, Gare6, Gare7, Gare8, Gare9, Gare10;
 	sf::RectangleShape Ligne1Gare1Gare2, Ligne1Gare2Gare3, Ligne1Gare3Gare4, Ligne1Gare4Gare5, Ligne1Gare5Gare6, Ligne1Gare6Gare7, Ligne1Gare7Gare8, Ligne1Gare8Gare9, Ligne1Gare9Gare10, Ligne2Gare1Gare2, Ligne2Gare2Gare3, Ligne2Gare3Gare4, Ligne2Gare4Gare5, Ligne2Gare5Gare6, Ligne2Gare6Gare7, Ligne2Gare7Gare8, Ligne2Gare8Gare9, Ligne2Gare9Gare10;
 	sf::CircleShape AllerRetour1(30), AllerRetour2(30);
 	if (!TextureGare.loadFromFile(std::string("C:/Program Files/SFML/img/gare.png")))
@@ -271,57 +312,49 @@ int main()
 		//return EXIT_FAILURE;
 	}
 	//On mets à toutes les gares la même texture
-	
-	Gare1.setTexture(TextureGare);
-	Gare2.setTexture(TextureGare);
-	Gare3.setTexture(TextureGare);
-	Gare4.setTexture(TextureGare);
-	Gare5.setTexture(TextureGare);
-	Gare6.setTexture(TextureGare);
-	Gare7.setTexture(TextureGare);
-	Gare8.setTexture(TextureGare);
-	Gare9.setTexture(TextureGare);
-	Gare10.setTexture(TextureGare);
+	for (int i = 0; i < liste_station.size(); i++) {
+		liste_station[i].ChangementTextureGare(TextureGare);
+		liste_station[i].ChangementTailleGare(sf::Vector2f(0.1,0.1));
+	}
+
 	//MaJ des positions et de la tailles des différentes gares
 	//Les gares :
-	Gare1.setPosition(sf::Vector2f(125, 100));
-	Gare1.setScale(sf::Vector2f(0.1, 0.1));
-	Gare2.setPosition(sf::Vector2f(225, 300));
-	Gare2.setScale(sf::Vector2f(0.1, 0.1));
-	Gare3.setPosition(sf::Vector2f(350, 600));
-	Gare3.setScale(sf::Vector2f(0.1, 0.1));
-	Gare4.setPosition(sf::Vector2f(550, 750));
-	Gare4.setScale(sf::Vector2f(0.1, 0.1));
-	Gare5.setPosition(sf::Vector2f(750, 750));
-	Gare5.setScale(sf::Vector2f(0.1, 0.1));
-	Gare6.setPosition(sf::Vector2f(900, 600));
-	Gare6.setScale(sf::Vector2f(0.1, 0.1));
-	Gare7.setPosition(sf::Vector2f(1000, 400));
-	Gare7.setScale(sf::Vector2f(0.1, 0.1));
-	Gare8.setPosition(sf::Vector2f(1100, 250));
-	Gare8.setScale(sf::Vector2f(0.1, 0.1));
-	Gare9.setPosition(sf::Vector2f(1300, 350));
-	Gare9.setScale(sf::Vector2f(0.1, 0.1));
-	Gare10.setPosition(sf::Vector2f(1450, 550));
-	Gare10.setScale(sf::Vector2f(0.1, 0.1));
+	liste_station[0].ChangementPositionGare(sf::Vector2f(125, 100));
+	
+	liste_station[1].ChangementPositionGare(sf::Vector2f(225, 300));
+	
+	liste_station[2].ChangementPositionGare(sf::Vector2f(350, 600));
+	
+	liste_station[3].ChangementPositionGare(sf::Vector2f(550, 750));
+	
+	liste_station[4].ChangementPositionGare(sf::Vector2f(750, 750));
+	
+	liste_station[5].ChangementPositionGare(sf::Vector2f(900, 600));
+	
+	liste_station[6].ChangementPositionGare(sf::Vector2f(1000, 400));
+		
+	liste_station[7].ChangementPositionGare(sf::Vector2f(1100, 250));
+	
+	liste_station[8].ChangementPositionGare(sf::Vector2f(1300, 350));
+	
+	liste_station[9].ChangementPositionGare(sf::Vector2f(1450, 550));
+	
+	
 	//gare 1 --> gare 2
+	
 	Ligne1Gare1Gare2.setPosition(sf::Vector2f(150, 150));
 	Ligne1Gare1Gare2.setSize(sf::Vector2f(2, 195));
 	Ligne1Gare1Gare2.rotate(335);
-	Ligne1Gare1Gare2.setFillColor(sf::Color(0, 0, 0));
 	Ligne2Gare1Gare2.setPosition(sf::Vector2f(175, 150));
 	Ligne2Gare1Gare2.setSize(sf::Vector2f(2, 170));
 	Ligne2Gare1Gare2.rotate(335);
-	Ligne2Gare1Gare2.setFillColor(sf::Color(0, 0, 0));
 	//gare 2 --> gare 3
 	Ligne1Gare2Gare3.setPosition(sf::Vector2f(240, 350));
 	Ligne1Gare2Gare3.setSize(sf::Vector2f(2, 304));
 	Ligne1Gare2Gare3.rotate(338);
-	Ligne1Gare2Gare3.setFillColor(sf::Color(0, 0, 0));
 	Ligne2Gare2Gare3.setPosition(sf::Vector2f(265, 350));
 	Ligne2Gare2Gare3.setSize(sf::Vector2f(2, 275));
 	Ligne2Gare2Gare3.rotate(338);
-	Ligne2Gare2Gare3.setFillColor(sf::Color(0, 0, 0));
 	//gare 3 --> gare 4
 	Ligne1Gare3Gare4.setPosition(sf::Vector2f(360, 650));
 	Ligne1Gare3Gare4.setSize(sf::Vector2f(2, 233));
@@ -402,16 +435,10 @@ int main()
 		//Affichage des gares et des lignes de metro
 		//window.draw(AllerRetour1);
 		//window.draw(AllerRetour2);
-		window.draw(Gare1);
-		window.draw(Gare2);
-		window.draw(Gare3);
-		window.draw(Gare4);
-		window.draw(Gare5);
-		window.draw(Gare6);
-		window.draw(Gare7);
-		window.draw(Gare8);
-		window.draw(Gare9);
-		window.draw(Gare10);
+		for (int i = 0; i < liste_station.size(); i++) {
+			liste_station[i].AffichageGare(window);
+		}
+
 		window.draw(Ligne1Gare1Gare2);
 		window.draw(Ligne1Gare2Gare3);
 		window.draw(Ligne1Gare3Gare4);

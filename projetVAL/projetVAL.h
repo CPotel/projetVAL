@@ -17,7 +17,8 @@ private:
     int nb_passager;
     int numero_station; //std::string nom_station;
     bool train_present;
-
+    sf::Sprite Gare;
+    sf::RectangleShape voie1, voie2; //La voie 1 vas en station croissante (1,2,3,etc) et la voie 2 en station décroissante (9,8,7,etc)
 
 public:
     station(int num_station = 1, int nb_passagers = 0, bool trains_present = false) {
@@ -30,6 +31,10 @@ public:
             std::cout<<"ERROR : Station number is 0"<<std::endl;
             exit(0);
         }
+
+        //Couleur des voies : Noir
+        voie1.setFillColor(sf::Color(0, 0, 0));
+        voie2.setFillColor(sf::Color(0, 0, 0));
     }
 
     //Creation des getters
@@ -46,6 +51,29 @@ public:
 
     //Fonction depart d'un train
     void depart_train();
+
+    //Changement de texture de gare
+    void ChangementTextureGare(const sf::Texture &Text);
+
+    //Affichage de la Gare
+    void AffichageGare(sf::RenderWindow &Win);
+
+    //Changement Taille Gare
+    void ChangementTailleGare(const sf::Vector2f &taille);
+
+    //Changement Position Gare
+    void ChangementPositionGare(const sf::Vector2f &position);
+
+    //Changement Taille Voie
+    void ChangementTailleVoie1(const sf::Vector2f taille);
+    void ChangementTailleVoie2(const sf::Vector2f taille);
+
+    //RotationVoie
+    void RotationVoie1(const int);
+    void RotationVoie2(const int);
+    //Changement Position Voie
+    void ChangementPositionVoie1(const sf::Vector2f& pos);
+    void ChangementPositionVoie2(const sf::Vector2f& pos);
 };
 
 class metro {
