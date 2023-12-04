@@ -106,7 +106,7 @@ int main()
 	//Initialisation liste de stations
 	//Instalation de stations de métro dans notre système
   vector<station> liste_station;
-	for (int i = 1; i < 4; i++) {
+	for (int i = 1; i < 11; i++) {
 		liste_station.push_back(station(i, 10));
 	}
 
@@ -207,6 +207,7 @@ int main()
 		//return EXIT_FAILURE;
 	}
 	//On mets à toutes les gares la même texture
+	
 	Gare1.setTexture(TextureGare);
 	Gare2.setTexture(TextureGare);
 	Gare3.setTexture(TextureGare);

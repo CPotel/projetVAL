@@ -18,6 +18,7 @@ private:
     int numero_station; //std::string nom_station;
     bool train_present;
 
+
 public:
     station(int num_station = 1, int nb_passagers = 0, bool trains_present = false) {
         nb_passager = nb_passagers;
