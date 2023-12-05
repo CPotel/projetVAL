@@ -69,8 +69,7 @@ public:
     void ChangementTailleVoie2(const sf::Vector2f taille);
 
     //RotationVoie
-    void RotationVoie1(const int);
-    void RotationVoie2(const int);
+    void RotationVoie(const int n);
     //Changement Position Voie
     void ChangementPositionVoie1(const sf::Vector2f& pos);
     void ChangementPositionVoie2(const sf::Vector2f& pos);
