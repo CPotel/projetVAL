@@ -313,7 +313,6 @@ int main()
 		}
 	);
 	
-	
 	//affichage sur une console :
 	sf::RenderWindow window(sf::VideoMode(1600, 900), "Visualisation du métro Lillois");
 	
