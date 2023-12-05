@@ -72,7 +72,11 @@ void station::ChangementPositionVoie1(const sf::Vector2f& pos) {
 void station::ChangementPositionVoie2(const sf::Vector2f& pos) {
 	this->voie2.setPosition(pos);
 }
-
+void station::AffichageVoies(sf::RenderWindow& Win) {
+	Win.draw(this->voie1);
+	Win.draw(this->voie2);
+	
+}
 
 
 //Fonction du metro
@@ -341,21 +345,37 @@ int main()
 	
 	
 	//gare 1 --> gare 2
-	
-	Ligne1Gare1Gare2.setPosition(sf::Vector2f(150, 150));
+	liste_station[0].ChangementPositionVoie1(sf::Vector2f(150, 150));
+	liste_station[0].ChangementPositionVoie2(sf::Vector2f(175, 150));
+	liste_station[0].ChangementTailleVoie1(sf::Vector2f(2, 195));
+	liste_station[0].ChangementTailleVoie2(sf::Vector2f(2, 170));
+	liste_station[0].RotationVoie(335);
+	/*Ligne1Gare1Gare2.setPosition(sf::Vector2f(150, 150));
 	Ligne1Gare1Gare2.setSize(sf::Vector2f(2, 195));
 	Ligne1Gare1Gare2.rotate(335);
 	Ligne2Gare1Gare2.setPosition(sf::Vector2f(175, 150));
 	Ligne2Gare1Gare2.setSize(sf::Vector2f(2, 170));
-	Ligne2Gare1Gare2.rotate(335);
-	//gare 2 --> gare 3
+	Ligne2Gare1Gare2.rotate(335);*/
+	//gare 2 --> gare 3	
+	liste_station[1].ChangementPositionVoie1(sf::Vector2f(240, 350));
+	liste_station[1].ChangementPositionVoie2(sf::Vector2f(265, 350));
+	liste_station[1].ChangementTailleVoie1(sf::Vector2f(2, 304));
+	liste_station[1].ChangementTailleVoie2(sf::Vector2f(2, 275));
+	liste_station[1].RotationVoie(338);
+	/*
 	Ligne1Gare2Gare3.setPosition(sf::Vector2f(240, 350));
 	Ligne1Gare2Gare3.setSize(sf::Vector2f(2, 304));
 	Ligne1Gare2Gare3.rotate(338);
 	Ligne2Gare2Gare3.setPosition(sf::Vector2f(265, 350));
 	Ligne2Gare2Gare3.setSize(sf::Vector2f(2, 275));
-	Ligne2Gare2Gare3.rotate(338);
+	Ligne2Gare2Gare3.rotate(338);*/
 	//gare 3 --> gare 4
+	liste_station[2].ChangementPositionVoie1(sf::Vector2f(360, 650));
+	liste_station[2].ChangementPositionVoie2(sf::Vector2f(400, 650));
+	liste_station[2].ChangementTailleVoie1(sf::Vector2f(2, 233));
+	liste_station[2].ChangementTailleVoie2(sf::Vector2f(2, 200));
+	liste_station[2].RotationVoie(305);
+	/*
 	Ligne1Gare3Gare4.setPosition(sf::Vector2f(360, 650));
 	Ligne1Gare3Gare4.setSize(sf::Vector2f(2, 233));
 	Ligne1Gare3Gare4.rotate(305);
@@ -363,8 +383,14 @@ int main()
 	Ligne2Gare3Gare4.setPosition(sf::Vector2f(400, 650));
 	Ligne2Gare3Gare4.setSize(sf::Vector2f(2, 200));
 	Ligne2Gare3Gare4.rotate(305);
-	Ligne2Gare3Gare4.setFillColor(sf::Color(0, 0, 0));
+	Ligne2Gare3Gare4.setFillColor(sf::Color(0, 0, 0));*/
 	//gare 4 --> gare 5
+	liste_station[3].ChangementPositionVoie1(sf::Vector2f(600, 790));
+	liste_station[3].ChangementPositionVoie2(sf::Vector2f(585, 765));
+	liste_station[3].ChangementTailleVoie1(sf::Vector2f(2, 155));
+	liste_station[3].ChangementTailleVoie2(sf::Vector2f(2, 182));
+	liste_station[3].RotationVoie(270);
+	/*
 	Ligne1Gare4Gare5.setPosition(sf::Vector2f(600, 790));
 	Ligne1Gare4Gare5.setSize(sf::Vector2f(2, 155));
 	Ligne1Gare4Gare5.rotate(270);
@@ -372,8 +398,14 @@ int main()
 	Ligne2Gare4Gare5.setPosition(sf::Vector2f(585, 765));
 	Ligne2Gare4Gare5.setSize(sf::Vector2f(2, 182));
 	Ligne2Gare4Gare5.rotate(270);
-	Ligne2Gare4Gare5.setFillColor(sf::Color(0, 0, 0));
+	Ligne2Gare4Gare5.setFillColor(sf::Color(0, 0, 0));*/
 	//gare 5 --> gare 6
+	liste_station[4].ChangementPositionVoie1(sf::Vector2f(800, 790));
+	liste_station[4].ChangementPositionVoie2(sf::Vector2f(785, 765));
+	liste_station[4].ChangementTailleVoie1(sf::Vector2f(2, 200));
+	liste_station[4].ChangementTailleVoie2(sf::Vector2f(2, 170));
+	liste_station[4].RotationVoie(225);
+	/*
 	Ligne1Gare5Gare6.setPosition(sf::Vector2f(800, 790));
 	Ligne1Gare5Gare6.setSize(sf::Vector2f(2, 200));
 	Ligne1Gare5Gare6.rotate(225);
@@ -381,8 +413,13 @@ int main()
 	Ligne2Gare5Gare6.setPosition(sf::Vector2f(785, 765));
 	Ligne2Gare5Gare6.setSize(sf::Vector2f(2, 170));
 	Ligne2Gare5Gare6.rotate(225);
-	Ligne2Gare5Gare6.setFillColor(sf::Color(0, 0, 0));
+	Ligne2Gare5Gare6.setFillColor(sf::Color(0, 0, 0));*/
 	//gare 6 --> gare 7
+	liste_station[5].ChangementPositionVoie1(sf::Vector2f(925, 600));
+	liste_station[5].ChangementPositionVoie2(sf::Vector2f(940, 630));
+	liste_station[5].ChangementTailleVoie1(sf::Vector2f(2, 175));
+	liste_station[5].ChangementTailleVoie2(sf::Vector2f(2, 210));
+	liste_station[5].RotationVoie(210);/*
 	Ligne1Gare6Gare7.setPosition(sf::Vector2f(925, 600));
 	Ligne1Gare6Gare7.setSize(sf::Vector2f(2, 175));
 	Ligne1Gare6Gare7.rotate(210);
@@ -390,8 +427,13 @@ int main()
 	Ligne2Gare6Gare7.setPosition(sf::Vector2f(940, 630));
 	Ligne2Gare6Gare7.setSize(sf::Vector2f(2, 210));
 	Ligne2Gare6Gare7.rotate(210);
-	Ligne2Gare6Gare7.setFillColor(sf::Color(0, 0, 0));
+	Ligne2Gare6Gare7.setFillColor(sf::Color(0, 0, 0));*/
 	//gare 7 --> gare 8
+	liste_station[6].ChangementPositionVoie1(sf::Vector2f(1030, 400));
+	liste_station[6].ChangementPositionVoie2(sf::Vector2f(1045, 425));
+	liste_station[6].ChangementTailleVoie1(sf::Vector2f(2, 120));
+	liste_station[6].ChangementTailleVoie2(sf::Vector2f(2, 150));
+	liste_station[6].RotationVoie(215);/*
 	Ligne1Gare7Gare8.setPosition(sf::Vector2f(1030, 400));
 	Ligne1Gare7Gare8.setSize(sf::Vector2f(2, 120));
 	Ligne1Gare7Gare8.rotate(215);
@@ -399,8 +441,14 @@ int main()
 	Ligne2Gare7Gare8.setPosition(sf::Vector2f(1045, 425));
 	Ligne2Gare7Gare8.setSize(sf::Vector2f(2, 150));
 	Ligne2Gare7Gare8.rotate(215);
-	Ligne2Gare7Gare8.setFillColor(sf::Color(0, 0, 0));
+	Ligne2Gare7Gare8.setFillColor(sf::Color(0, 0, 0));*/
 	//gare 8 --> gare 9
+	liste_station[7].ChangementPositionVoie1(sf::Vector2f(1130, 255));
+	liste_station[7].ChangementPositionVoie2(sf::Vector2f(1150, 290));
+	liste_station[7].ChangementTailleVoie1(sf::Vector2f(2, 210));
+	liste_station[7].ChangementTailleVoie2(sf::Vector2f(2, 180));
+	liste_station[7].RotationVoie(300);
+	/*
 	Ligne1Gare8Gare9.setPosition(sf::Vector2f(1130, 255));
 	Ligne1Gare8Gare9.setSize(sf::Vector2f(2, 210));
 	Ligne1Gare8Gare9.rotate(300);
@@ -408,8 +456,13 @@ int main()
 	Ligne2Gare8Gare9.setPosition(sf::Vector2f(1150, 290));
 	Ligne2Gare8Gare9.setSize(sf::Vector2f(2, 180));
 	Ligne2Gare8Gare9.rotate(300);
-	Ligne2Gare8Gare9.setFillColor(sf::Color(0, 0, 0));
+	Ligne2Gare8Gare9.setFillColor(sf::Color(0, 0, 0));*/
 	//gare 9 --> gare 10
+	liste_station[8].ChangementPositionVoie1(sf::Vector2f(1325, 400));
+	liste_station[8].ChangementPositionVoie2(sf::Vector2f(1350, 400));
+	liste_station[8].ChangementTailleVoie1(sf::Vector2f(2, 220));
+	liste_station[8].ChangementTailleVoie2(sf::Vector2f(2, 195));
+	liste_station[8].RotationVoie(320);/*
 	Ligne1Gare9Gare10.setPosition(sf::Vector2f(1325, 400));
 	Ligne1Gare9Gare10.setSize(sf::Vector2f(2, 220));
 	Ligne1Gare9Gare10.rotate(320);
@@ -417,7 +470,7 @@ int main()
 	Ligne2Gare9Gare10.setPosition(sf::Vector2f(1350, 400));
 	Ligne2Gare9Gare10.setSize(sf::Vector2f(2, 195));
 	Ligne2Gare9Gare10.rotate(320);
-	Ligne2Gare9Gare10.setFillColor(sf::Color(0, 0, 0));
+	Ligne2Gare9Gare10.setFillColor(sf::Color(0, 0, 0));*/
 	//Les aller retours
 	/*AllerRetour1.setPosition(sf::Vector2f(100, 70));
 	AllerRetour1.setOutlineThickness(2);
@@ -437,26 +490,8 @@ int main()
 		//window.draw(AllerRetour2);
 		for (int i = 0; i < liste_station.size(); i++) {
 			liste_station[i].AffichageGare(window);
+			liste_station[i].AffichageVoies(window);
 		}
-
-		window.draw(Ligne1Gare1Gare2);
-		window.draw(Ligne1Gare2Gare3);
-		window.draw(Ligne1Gare3Gare4);
-		window.draw(Ligne1Gare4Gare5);
-		window.draw(Ligne1Gare5Gare6);
-		window.draw(Ligne1Gare6Gare7);
-		window.draw(Ligne1Gare7Gare8);
-		window.draw(Ligne1Gare8Gare9);
-		window.draw(Ligne1Gare9Gare10);
-		window.draw(Ligne2Gare1Gare2);
-		window.draw(Ligne2Gare2Gare3);
-		window.draw(Ligne2Gare3Gare4);
-		window.draw(Ligne2Gare4Gare5);
-		window.draw(Ligne2Gare5Gare6);
-		window.draw(Ligne2Gare6Gare7);
-		window.draw(Ligne2Gare7Gare8);
-		window.draw(Ligne2Gare8Gare9);
-		window.draw(Ligne2Gare9Gare10);
 		window.display();
 	}
 }

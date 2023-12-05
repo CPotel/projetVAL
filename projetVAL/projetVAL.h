@@ -73,6 +73,9 @@ public:
     //Changement Position Voie
     void ChangementPositionVoie1(const sf::Vector2f& pos);
     void ChangementPositionVoie2(const sf::Vector2f& pos);
+
+    //Affichage Voies
+    void AffichageVoies(sf::RenderWindow& Win);
 };
 
 class metro {
