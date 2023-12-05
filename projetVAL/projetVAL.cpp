@@ -149,6 +149,11 @@ void metro::ChangementTextureWagon(const sf::Texture& Text) {
 	this->wagon.setTexture(Text);
 }
 
+//changement Position Metro
+void metro::ChangementPositionMetro(const sf::Vector2f& pos) {
+	this->wagon.setPosition(pos);
+}
+
 
 int main()
 {
@@ -189,6 +194,10 @@ int main()
 				if (pourcent < 100) { //si elle n'a pas atteint la station
 					cout << "Progression de la rame 1 : " << pourcent << " %" << endl; //affichage de sa progression
 					metro1.set_position(pourcent + vit); //déplacement
+					//Affichage du wagon
+					if (metro1.reverse() == false) { //Si il est dans le sens des gare croissants
+						metro1.ChangementPositionMetro(sf::Vector2f())
+					}
 				}
 				else { //sinon
 					metro1.freinage(vit); //arrêt

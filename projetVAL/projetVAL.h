@@ -125,4 +125,5 @@ public:
     void depart_station(int vit_depart);
     void demi_tour();
     void ChangementTextureWagon(const sf::Texture& Text);
+    void ChangementPositionMetro(const sf::Vector2f& pos);
 };
