@@ -178,12 +178,12 @@ int main()
 					int stat_nom = metro1.get_station(); //récupération de la station atteinte
 					station stat_actu = liste_station.at(stat_nom - 1);
 					stat_actu.arrivage_train();
-					cout << "Arrivee a la station numero " << stat_nom << endl;
+					cout << "Arrivee de la rame 1 a la station numero " << stat_nom << endl;
 					int passagers = metro1.get_passager_dedans();
 					int aquai = stat_actu.get_passager(); //récupération du nombre de passagers à bord et à quai
 					if (stat_nom == liste_station.size() || (stat_nom == 1 && metro1.reverse())) { //si terminus
 						cout << "Fin de trajet, preparation du demi-tour." << endl;
-						cout << "Descente des " << passagers << " passagers restants." << endl;
+						cout << "Descente des " << passagers << " passagers restants de la rame 1." << endl;
 						std::this_thread::sleep_for(passagers * 0.5s);
 						metro1.baisse_passager_dedans(passagers); //descente de tous les passagers
 						aquai += passagers;
@@ -197,28 +197,28 @@ int main()
 						metro1.hausse_passager_dedans(montee);
 						aquai -= montee;
 						stat_actu.set_passager(aquai);
-						cout << "Montee de " << montee << " passagers." << endl;
+						cout << "Montee de " << montee << " passagers dans la rame 1." << endl;
 						std::this_thread::sleep_for(montee * 0.25s);
-						cout << "Depart de la station " << stat_nom << endl;
+						cout << "Depart de la rame 1 de la station " << stat_nom << endl;
 						metro1.depart_station(vit); //début du trajet en sens inverse
 						stat_actu.depart_train();
 					}
 					else{ //sinon
 						std::uniform_int_distribution<int> descente_pif{ 1, passagers }; //descente d'un nombre aléatoire de passagers de la rame (au moins 1)
 						int descente = descente_pif(re);
-						cout << "Descente de " << descente << " passagers" << endl;
+						cout << "Descente de " << descente << " passagers de la rame 1." << endl;
 						std::this_thread::sleep_for(descente * 0.25s);
 						metro1.baisse_passager_dedans(descente);
 						aquai += descente;
 						stat_actu.set_passager(aquai);
 						std::uniform_int_distribution<int> montee_pif{ 1,aquai }; //montée d'un nombre aléatoire de passagers dans la rame depuis le quai (au moins 1)
 						int montee = montee_pif(re);
-						cout << "Montee de " << montee << " passagers" << endl;
+						cout << "Montee de " << montee << " passagers dans la rame 1." << endl;
 						std::this_thread::sleep_for(montee * 0.25s);
 						metro1.hausse_passager_dedans(montee);
 						aquai -= montee;
 						stat_actu.set_passager(aquai);
-						cout << "Depart de la rame de la station " << stat_nom << endl;
+						cout << "Depart de la rame 1 de la station " << stat_nom << endl;
 						metro1.depart_station(vit); //reprise du trajet
 						stat_actu.depart_train();
 					}
@@ -238,7 +238,7 @@ int main()
 				int pourcent = metro2.get_position();
 				int vit = metro2.get_vitesse(); //récupération de la position et de la vitesse de la rame
 				if (pourcent < 100) { //si elle n'a pas atteint la station
-					cout << "Progression de la rame 1 : " << pourcent << " %" << endl; //affichage de sa progression
+					cout << "Progression de la rame 2 : " << pourcent << " %" << endl; //affichage de sa progression
 					metro2.set_position(pourcent + vit); //déplacement
 				}
 				else { //sinon
@@ -248,12 +248,12 @@ int main()
 					int stat_nom = metro2.get_station(); //récupération de la station atteinte
 					station stat_actu = liste_station.at(stat_nom - 1);
 					stat_actu.arrivage_train();
-					cout << "Arrivee a la station numero " << stat_nom << endl;
+					cout << "Arrivee de la rame 2 a la station numero " << stat_nom << endl;
 					int passagers = metro2.get_passager_dedans();
 					int aquai = stat_actu.get_passager(); //récupération du nombre de passagers à bord et à quai
 					if (stat_nom == liste_station.size() || (stat_nom == 1 && metro2.reverse())) { //si terminus
 						cout << "Fin de trajet, preparation du demi-tour." << endl;
-						cout << "Descente des " << passagers << " passagers restants." << endl;
+						cout << "Descente des " << passagers << " passagers restants de la rame 2." << endl;
 						std::this_thread::sleep_for(passagers * 0.5s);
 						metro2.baisse_passager_dedans(passagers); //descente de tous les passagers
 						aquai += passagers;
@@ -267,28 +267,28 @@ int main()
 						metro2.hausse_passager_dedans(montee);
 						aquai -= montee;
 						stat_actu.set_passager(aquai);
-						cout << "Montee de " << montee << " passagers." << endl;
+						cout << "Montee de " << montee << " passagers dans la rame 2." << endl;
 						std::this_thread::sleep_for(montee * 0.25s);
-						cout << "Depart de la station " << stat_nom << endl;
+						cout << "Depart de la rame 2 de la station " << stat_nom << endl;
 						metro2.depart_station(vit); //début du trajet en sens inverse
 						stat_actu.depart_train();
 					}
 					else { //sinon
 						std::uniform_int_distribution<int> descente_pif{ 1, passagers }; //descente d'un nombre aléatoire de passagers de la rame (au moins 1)
 						int descente = descente_pif(re);
-						cout << "Descente de " << descente << " passagers" << endl;
+						cout << "Descente de " << descente << " passagers de la rame 2." << endl;
 						std::this_thread::sleep_for(descente * 0.25s);
 						metro2.baisse_passager_dedans(descente);
 						aquai += descente;
 						stat_actu.set_passager(aquai);
 						std::uniform_int_distribution<int> montee_pif{ 1,aquai }; //montée d'un nombre aléatoire de passagers dans la rame depuis le quai (au moins 1)
 						int montee = montee_pif(re);
-						cout << "Montee de " << montee << " passagers" << endl;
+						cout << "Montee de " << montee << " passagers dans la rame 2." << endl;
 						std::this_thread::sleep_for(montee * 0.25s);
 						metro2.hausse_passager_dedans(montee);
 						aquai -= montee;
 						stat_actu.set_passager(aquai);
-						cout << "Depart de la rame de la station " << stat_nom << endl;
+						cout << "Depart de la rame 2 de la station " << stat_nom << endl;
 						metro2.depart_station(vit); //reprise du trajet
 						stat_actu.depart_train();
 					}
