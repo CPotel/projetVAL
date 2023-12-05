@@ -422,8 +422,7 @@ int main()
 	AllerRetour1.setOutlineThickness(2);
 	AllerRetour1.setOutlineColor(sf::Color(0, 0, 0));*/
 
-	Wagon1.setTexture(TextureWagon);
-	Wagon1.setScale(sf::Vector2f(0.075, 0.075));
+
 	while (window.isOpen())
 	{
 		sf::Event event;
