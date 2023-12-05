@@ -230,7 +230,7 @@ int main()
 			}
 		}
 	);
-
+	/*
 	std::jthread rame2(
 		[&stopped, &re, &liste_station, &size, &metro2]
 		{
@@ -300,7 +300,7 @@ int main()
 			}
 		}
 	);
-	
+	*/
 	
 	//affichage sur une console :
 	sf::RenderWindow window(sf::VideoMode(1600, 900), "Visualisation du métro Lillois");
