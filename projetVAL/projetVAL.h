@@ -35,6 +35,7 @@ public:
         //Couleur des voies : Noir
         voie1.setFillColor(sf::Color(0, 0, 0));
         voie2.setFillColor(sf::Color(0, 0, 0));
+
     }
 
     //Creation des getters
@@ -88,6 +89,7 @@ private:
     int station; //0 si pas dans une station, num station si dans une station
     int numero_train;
     bool sens; // si true, traverse les stations en sens inverse
+    sf::Sprite wagon;
 
 public:
 
@@ -99,6 +101,7 @@ public:
         station = station_actu;
         numero_train = numero_metro;
         sens = sens_trajet;
+       
     }
 
     //creation des getters
@@ -121,4 +124,5 @@ public:
     void arrivee_station(int taille_ligne); //Change la variable station et prochain_arret
     void depart_station(int vit_depart);
     void demi_tour();
+    void ChangementTextureWagon(const sf::Texture& Text);
 };
