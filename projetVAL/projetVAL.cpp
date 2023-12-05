@@ -144,6 +144,11 @@ const bool metro::reverse() {
 	return this->sens;
 }
 
+//Changement Texture Wagon
+void metro::ChangementTextureWagon(const sf::Texture& Text) {
+	this->wagon.setTexture(Text);
+}
+
 
 int main()
 {
@@ -154,8 +159,15 @@ int main()
 	for (int i = 1; i < 11; i++) {
 		liste_station.push_back(station(i, 10));
 	}
+	//Initialisation des textures de Gare et de Wagon
+	sf::Texture TextureGare, TextureWagon;
+	if (!TextureGare.loadFromFile(std::string("C:/Program Files/SFML/img/gare.png")) || !TextureWagon.loadFromFile(std::string("C:/Program Files/SFML/img/RameMetro.png")))
+	{
+		cerr << "Erreur pendant le chargement des images" << endl;
 
+	}
 	metro metro1 = metro(25, 1, 0, 0, 0, 1);
+	metro1.ChangementTextureWagon(TextureWagon);
 	metro metro2 = metro(10, 1, 0, 0, 0, 2);
 
 	int vit_const1 = 20;
@@ -316,9 +328,7 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(1600, 900), "Visualisation du métro Lillois");
 	
 
-	sf::Texture TextureGare;
-	//sf::Sprite Gare1, Gare2, Gare3, Gare4, Gare5, Gare6, Gare7, Gare8, Gare9, Gare10;
-	sf::RectangleShape Ligne1Gare1Gare2, Ligne1Gare2Gare3, Ligne1Gare3Gare4, Ligne1Gare4Gare5, Ligne1Gare5Gare6, Ligne1Gare6Gare7, Ligne1Gare7Gare8, Ligne1Gare8Gare9, Ligne1Gare9Gare10, Ligne2Gare1Gare2, Ligne2Gare2Gare3, Ligne2Gare3Gare4, Ligne2Gare4Gare5, Ligne2Gare5Gare6, Ligne2Gare6Gare7, Ligne2Gare7Gare8, Ligne2Gare8Gare9, Ligne2Gare9Gare10;
+
 	sf::CircleShape AllerRetour1(30), AllerRetour2(30);
 	if (!TextureGare.loadFromFile(std::string("C:/Program Files/SFML/img/gare.png")))
 	{
@@ -421,6 +431,8 @@ int main()
 	/*AllerRetour1.setPosition(sf::Vector2f(100, 70));
 	AllerRetour1.setOutlineThickness(2);
 	AllerRetour1.setOutlineColor(sf::Color(0, 0, 0));*/
+
+
 	while (window.isOpen())
 	{
 		sf::Event event;
