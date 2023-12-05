@@ -158,19 +158,22 @@ int main()
 	metro metro1 = metro(25, 1, 0, 0, 0, 1);
 	metro metro2 = metro(10, 1, 0, 0, 0, 2);
 
+	int vit_const1 = 20;
+	int vit_const2 = 10;
+
 	int size = liste_station.size();
 	//test thread
 	bool stopped = false;
 	std::jthread rame1(
-		[&stopped, &re, &liste_station, &size, &metro1]
+		[&stopped, &re, &liste_station, &size, &metro1, &metro2, &vit_const1]
 		{
 			cout << "Rame 1 prete" << endl;
 			metro1.acceleration(20); //départ de la rame de la zone de lancement
 			cout << "Rame 1 partie de la station de lancement avec " << metro1.get_passager_dedans() << " passagers." << endl;
 			while (!stopped) { //tant qu'on a pas arrêté
 				std::this_thread::sleep_for(1s); //attente d'1s pour simuler le déplacement de la rame
-				int pourcent = metro1.get_position();
-				int vit = metro1.get_vitesse(); //récupération de la position et de la vitesse de la rame
+				int pourcent = metro1.get_position(), pourcent_autre = metro2.get_position();
+				int vit = metro1.get_vitesse(), vit_autre = metro2.get_vitesse(); //récupération de la position et de la vitesse de la rame
 				if (pourcent < 100) { //si elle n'a pas atteint la station
 					cout << "Progression de la rame 1 : " << pourcent << " %" << endl; //affichage de sa progression
 					metro1.set_position(pourcent + vit); //déplacement
@@ -182,6 +185,10 @@ int main()
 					int stat_nom = metro1.get_station(); //récupération de la station atteinte
 					station stat_actu = liste_station.at(stat_nom - 1);
 					stat_actu.arrivage_train();
+					if(metro2.get_prochain_arret() == stat_nom){
+						cout << "Arret de la rame 2 pour maintenir une distance de securite" << endl;
+						metro2.freinage(vit_autre);
+					}
 					cout << "Arrivee de la rame 1 a la station numero " << stat_nom << endl;
 					int passagers = metro1.get_passager_dedans();
 					int aquai = stat_actu.get_passager(); //récupération du nombre de passagers à bord et à quai
@@ -232,7 +239,7 @@ int main()
 	);
 
 	std::jthread rame2(
-		[&stopped, &re, &liste_station, &size, &metro2]
+		[&stopped, &re, &liste_station, &size, &metro1, &metro2, &vit_const2]
 		{
 			cout << "Rame 2 prete" << endl;
 			metro2.acceleration(10);
@@ -241,6 +248,10 @@ int main()
 				std::this_thread::sleep_for(1s); //attente d'1s pour simuler le déplacement de la rame
 				int pourcent = metro2.get_position();
 				int vit = metro2.get_vitesse(); //récupération de la position et de la vitesse de la rame
+				if (vit == 0 && metro1.get_station() == 0) {
+					cout << "Redemarrage de la rame 2" << endl;
+					metro2.acceleration(vit_const2);
+				}
 				if (pourcent < 100) { //si elle n'a pas atteint la station
 					cout << "Progression de la rame 2 : " << pourcent << " %" << endl; //affichage de sa progression
 					metro2.set_position(pourcent + vit); //déplacement
