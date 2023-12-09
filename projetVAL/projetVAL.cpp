@@ -157,6 +157,14 @@ void metro::ChangementPositionMetro(const sf::Vector2f& pos) {
 
 int main()
 {
+	//Définition des tailles et positions des voies
+	const int posX_voie1[9] = { 150,240,360,600,800,925,1030,1130,1325 };
+	const int posY_voie1[9] = { 150,350,650,790,790,600,400,255,400 };
+	const int posX_voie2[9] = { 175,265,400,585,785,940,1045,1150,1350 };
+	const int posY_voie2[9] = { 150,350,650,765,765,630,425,290,400 };
+	const int taille_voie1[9] = { 195,304,233,155,200,175,120,210,220 };
+	const int taille_voie2[9] = { 170,275,200,182,170,210,150,180,195 };
+	const int rotation_voies[9] = { 335,338,305,270,225,210,215,300,320 };
 	std::default_random_engine re(time(0));
 	//Initialisation liste de stations
 	//Instalation de stations de métro dans notre système
@@ -196,7 +204,7 @@ int main()
 					metro1.set_position(pourcent + vit); //déplacement
 					//Affichage du wagon
 					if (metro1.reverse() == false) { //Si il est dans le sens des gare croissants
-						metro1.ChangementPositionMetro(sf::Vector2f())
+						metro1.ChangementPositionMetro(sf::Vector2f());
 					}
 				}
 				else { //sinon
@@ -373,74 +381,13 @@ int main()
 	liste_station[9].ChangementPositionGare(sf::Vector2f(1450, 550));
 	
 	
-	//gare 1 --> gare 2
-	liste_station[0].ChangementPositionVoie1(sf::Vector2f(150, 150));
-	liste_station[0].ChangementPositionVoie2(sf::Vector2f(175, 150));
-	liste_station[0].ChangementTailleVoie1(sf::Vector2f(2, 195));
-	liste_station[0].ChangementTailleVoie2(sf::Vector2f(2, 170));
-	liste_station[0].RotationVoie(335);
-
-	//gare 2 --> gare 3	
-	liste_station[1].ChangementPositionVoie1(sf::Vector2f(240, 350));
-	liste_station[1].ChangementPositionVoie2(sf::Vector2f(265, 350));
-	liste_station[1].ChangementTailleVoie1(sf::Vector2f(2, 304));
-	liste_station[1].ChangementTailleVoie2(sf::Vector2f(2, 275));
-	liste_station[1].RotationVoie(338);
-
-	//gare 3 --> gare 4
-	liste_station[2].ChangementPositionVoie1(sf::Vector2f(360, 650));
-	liste_station[2].ChangementPositionVoie2(sf::Vector2f(400, 650));
-	liste_station[2].ChangementTailleVoie1(sf::Vector2f(2, 233));
-	liste_station[2].ChangementTailleVoie2(sf::Vector2f(2, 200));
-	liste_station[2].RotationVoie(305);
-
-	//gare 4 --> gare 5
-	liste_station[3].ChangementPositionVoie1(sf::Vector2f(600, 790));
-	liste_station[3].ChangementPositionVoie2(sf::Vector2f(585, 765));
-	liste_station[3].ChangementTailleVoie1(sf::Vector2f(2, 155));
-	liste_station[3].ChangementTailleVoie2(sf::Vector2f(2, 182));
-	liste_station[3].RotationVoie(270);
-
-	//gare 5 --> gare 6
-	liste_station[4].ChangementPositionVoie1(sf::Vector2f(800, 790));
-	liste_station[4].ChangementPositionVoie2(sf::Vector2f(785, 765));
-	liste_station[4].ChangementTailleVoie1(sf::Vector2f(2, 200));
-	liste_station[4].ChangementTailleVoie2(sf::Vector2f(2, 170));
-	liste_station[4].RotationVoie(225);
-
-	//gare 6 --> gare 7
-	liste_station[5].ChangementPositionVoie1(sf::Vector2f(925, 600));
-	liste_station[5].ChangementPositionVoie2(sf::Vector2f(940, 630));
-	liste_station[5].ChangementTailleVoie1(sf::Vector2f(2, 175));
-	liste_station[5].ChangementTailleVoie2(sf::Vector2f(2, 210));
-	liste_station[5].RotationVoie(210);
-
-	//gare 7 --> gare 8
-	liste_station[6].ChangementPositionVoie1(sf::Vector2f(1030, 400));
-	liste_station[6].ChangementPositionVoie2(sf::Vector2f(1045, 425));
-	liste_station[6].ChangementTailleVoie1(sf::Vector2f(2, 120));
-	liste_station[6].ChangementTailleVoie2(sf::Vector2f(2, 150));
-	liste_station[6].RotationVoie(215);
-	
-	//gare 8 --> gare 9
-	liste_station[7].ChangementPositionVoie1(sf::Vector2f(1130, 255));
-	liste_station[7].ChangementPositionVoie2(sf::Vector2f(1150, 290));
-	liste_station[7].ChangementTailleVoie1(sf::Vector2f(2, 210));
-	liste_station[7].ChangementTailleVoie2(sf::Vector2f(2, 180));
-	liste_station[7].RotationVoie(300);
-	
-	//gare 9 --> gare 10
-	liste_station[8].ChangementPositionVoie1(sf::Vector2f(1325, 400));
-	liste_station[8].ChangementPositionVoie2(sf::Vector2f(1350, 400));
-	liste_station[8].ChangementTailleVoie1(sf::Vector2f(2, 220));
-	liste_station[8].ChangementTailleVoie2(sf::Vector2f(2, 195));
-	liste_station[8].RotationVoie(320);/*
-	
-	//Les aller retours
-	/*AllerRetour1.setPosition(sf::Vector2f(100, 70));
-	AllerRetour1.setOutlineThickness(2);
-	AllerRetour1.setOutlineColor(sf::Color(0, 0, 0));*/
-
+	for (int i = 0; i < 9; i++) {
+		liste_station[i].ChangementPositionVoie1(sf::Vector2f(posX_voie1[i], posY_voie1[i]));
+		liste_station[i].ChangementPositionVoie2(sf::Vector2f(posX_voie2[i], posY_voie2[i]));
+		liste_station[i].ChangementTailleVoie1(sf::Vector2f(2, taille_voie1[i]));
+		liste_station[i].ChangementTailleVoie2(sf::Vector2f(2, taille_voie2[i]));
+		liste_station[i].RotationVoie(rotation_voies[i]);
+}
 
 	while (window.isOpen())
 	{
