@@ -2,7 +2,7 @@
 // ou les fichiers Include spécifiques aux projets.
 
 #pragma once
-
+#define _USE_MATH_DEFINES
 #include <iostream>
 //#include <string>
 #include <vector>
@@ -11,6 +11,7 @@
 #include <thread>
 #include <chrono>
 #include <random>
+#include <cmath>
 
 class station {
 private:
@@ -77,6 +78,7 @@ public:
 
     //Affichage Voies
     void AffichageVoies(sf::RenderWindow& Win);
+
 };
 
 class metro {
@@ -126,4 +128,7 @@ public:
     void demi_tour();
     void ChangementTextureWagon(const sf::Texture& Text);
     void ChangementPositionMetro(const sf::Vector2f& pos);
+    void ChangementTailleMetro(const sf::Vector2f& pos);
+    void RotationMetro(const int n);
+    void AffichageMetro(sf::RenderWindow &Win);
 };

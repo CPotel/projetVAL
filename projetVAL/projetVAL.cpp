@@ -154,7 +154,16 @@ void metro::ChangementPositionMetro(const sf::Vector2f& pos) {
 	this->wagon.setPosition(pos);
 }
 
-
+//Affichage Metro
+void metro::AffichageMetro(sf::RenderWindow& Win) {
+	Win.draw(this->wagon);
+}
+void metro::ChangementTailleMetro(const sf::Vector2f& pos) {
+	this->wagon.setScale(pos);
+}
+void metro::RotationMetro(const int n) {
+	this->wagon.setRotation(n - 90);
+}
 int main()
 {
 	//Définition des tailles et positions des voies
@@ -174,7 +183,7 @@ int main()
 	}
 	//Initialisation des textures de Gare et de Wagon
 	sf::Texture TextureGare, TextureWagon;
-	if (!TextureGare.loadFromFile(std::string("C:/Program Files/SFML/img/gare.png")) || !TextureWagon.loadFromFile(std::string("C:/Program Files/SFML/img/RameMetro.png")))
+	if (!TextureGare.loadFromFile(std::string("C:/Program Files/SFML/img/gare.png")) || !TextureWagon.loadFromFile(std::string("C:/Program Files/SFML/img/RameMetro2.png")))
 	{
 		cerr << "Erreur pendant le chargement des images" << endl;
 
@@ -187,24 +196,36 @@ int main()
 	int vit_const2 = 10;
 
 	int size = liste_station.size();
+
+	const double pi = 3.14159265358979323846;
 	//test thread
 	bool stopped = false;
 	std::jthread rame1(
-		[&stopped, &re, &liste_station, &size, &metro1, &metro2, &vit_const1]
+		[&stopped, &re, &liste_station, &size, &metro1, &metro2, &vit_const1, &posX_voie1, &posY_voie1, &posX_voie2, &posY_voie2, &taille_voie1, &taille_voie2, &rotation_voies, &pi]
 		{
 			cout << "Rame 1 prete" << endl;
-			metro1.acceleration(20); //départ de la rame de la zone de lancement
+			metro1.acceleration(1); //départ de la rame de la zone de lancement
 			cout << "Rame 1 partie de la station de lancement avec " << metro1.get_passager_dedans() << " passagers." << endl;
 			while (!stopped) { //tant qu'on a pas arrêté
-				std::this_thread::sleep_for(1s); //attente d'1s pour simuler le déplacement de la rame
+				std::this_thread::sleep_for(0.01s); //attente d'1s pour simuler le déplacement de la rame
 				int pourcent = metro1.get_position(), pourcent_autre = metro2.get_position();
+				
 				int vit = metro1.get_vitesse(), vit_autre = metro2.get_vitesse(); //récupération de la position et de la vitesse de la rame
+				int numero_station_suivante = metro1.get_prochain_arret();
+				cout << "numero de station" << numero_station_suivante - 2 << endl;
 				if (pourcent < 100) { //si elle n'a pas atteint la station
 					cout << "Progression de la rame 1 : " << pourcent << " %" << endl; //affichage de sa progression
 					metro1.set_position(pourcent + vit); //déplacement
 					//Affichage du wagon
 					if (metro1.reverse() == false) { //Si il est dans le sens des gare croissants
-						metro1.ChangementPositionMetro(sf::Vector2f());
+						metro1.ChangementPositionMetro(sf::Vector2f(posX_voie1[numero_station_suivante - 2] + cos(rotation_voies[numero_station_suivante - 2] * pi / 180 + pi /2) * taille_voie1[numero_station_suivante - 2] * pourcent * pow(10, -2), posY_voie1[numero_station_suivante - 2] + sin(rotation_voies[numero_station_suivante - 2] * pi /180 + pi /2) * taille_voie1[numero_station_suivante - 2] * pourcent * pow(10, -2)));
+						metro1.RotationMetro(rotation_voies[numero_station_suivante - 2] -180);
+						cout << "angle :" << rotation_voies[numero_station_suivante - 2] * pi / 280 << "cos : "<< cos(rotation_voies[numero_station_suivante - 2] * pi / 180 +pi/2) <<" sin : " << sin(rotation_voies[numero_station_suivante - 2] * pi / 180+pi/2) << endl;
+					}
+					else { //Si il est dans le sens des gare décroissants
+						metro1.ChangementPositionMetro(sf::Vector2f(posX_voie2[numero_station_suivante - 1] + cos(rotation_voies[numero_station_suivante - 1] * pi / 180 + pi / 2) * taille_voie2[numero_station_suivante - 1] * (1 - pourcent * pow(10, -2)), posY_voie2[numero_station_suivante - 1] + sin(rotation_voies[numero_station_suivante - 1] * pi / 180 + pi / 2) * taille_voie2[numero_station_suivante - 1] * (1 - pourcent * pow(10, -2))));
+						metro1.RotationMetro(rotation_voies[numero_station_suivante - 1] -180);
+						cout << "angle :" << rotation_voies[numero_station_suivante - 2] * pi / 280 << "cos : " << cos(rotation_voies[numero_station_suivante - 2] * pi / 180 + pi / 2) << " sin : " << sin(rotation_voies[numero_station_suivante - 2] * pi / 180 + pi / 2) << endl;
 					}
 				}
 				else { //sinon
@@ -266,8 +287,9 @@ int main()
 			}
 		}
 	);
-
-	std::jthread rame2(
+	//affichage sur une console :
+	sf::RenderWindow window(sf::VideoMode(1600, 900), "Visualisation du métro Lillois");
+	/*std::jthread rame2(
 		[&stopped, &re, &liste_station, &size, &metro1, &metro2, &vit_const2]
 		{
 			cout << "Rame 2 prete" << endl;
@@ -339,10 +361,8 @@ int main()
 				}
 			}
 		}
-	);
+	);*/
 	
-	//affichage sur une console :
-	sf::RenderWindow window(sf::VideoMode(1600, 900), "Visualisation du métro Lillois");
 	
 
 
@@ -380,7 +400,8 @@ int main()
 	
 	liste_station[9].ChangementPositionGare(sf::Vector2f(1450, 550));
 	
-	
+	metro1.ChangementTailleMetro(sf::Vector2f(0.1, 0.1));
+	//Mise à jour des positions des voies
 	for (int i = 0; i < 9; i++) {
 		liste_station[i].ChangementPositionVoie1(sf::Vector2f(posX_voie1[i], posY_voie1[i]));
 		liste_station[i].ChangementPositionVoie2(sf::Vector2f(posX_voie2[i], posY_voie2[i]));
@@ -406,6 +427,7 @@ int main()
 			liste_station[i].AffichageGare(window);
 			liste_station[i].AffichageVoies(window);
 		}
+		metro1.AffichageMetro(window);
 		window.display();
 	}
 }
