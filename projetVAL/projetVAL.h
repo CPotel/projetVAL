@@ -15,9 +15,9 @@
 
 class station {
 private:
-    int nb_passager;
+    int nb_passager; //nombres de passagers sur le quai
     int numero_station; //std::string nom_station;
-    bool train_present;
+    bool train_present; //si un train est a quai
     sf::Sprite Gare;
     sf::RectangleShape voie1, voie2; //La voie 1 vas en station croissante (1,2,3,etc) et la voie 2 en station décroissante (9,8,7,etc)
 
@@ -119,13 +119,13 @@ public:
     void set_passager_dedans(int n);
     void set_position(int pos);
 
-    void acceleration(int n);
-    void freinage(int n);
-    void baisse_passager_dedans(int n);
-    void hausse_passager_dedans(int n);
+    void acceleration(int n); // hausse de la vitesse
+    void freinage(int n); //baisse de la vitesse
+    void baisse_passager_dedans(int n); //descente de passagers
+    void hausse_passager_dedans(int n); //montee de passagers
     void arrivee_station(int taille_ligne); //Change la variable station et prochain_arret
-    void depart_station(int vit_depart);
-    void demi_tour();
+    void depart_station(int vit_depart); //quitte la station
+    void demi_tour(); //changement de sens
     void ChangementTextureWagon(const sf::Texture& Text);
     void ChangementPositionMetro(const sf::Vector2f& pos);
     void ChangementTailleMetro(const sf::Vector2f& pos);

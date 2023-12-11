@@ -133,7 +133,7 @@ void metro::arrivee_station(int taille_ligne) {
 }
 void metro::depart_station(int vit_depart) {
 	this->station = 0; //0 équivaut à être en dehors d'une station;
-	acceleration(vit_depart); //Creation du départ A MODIFIER
+	acceleration(vit_depart);
 }
 
 void metro::demi_tour() {
@@ -174,7 +174,7 @@ int main()
 	const int taille_voie1[9] = { 195,304,233,155,200,175,120,210,220 };
 	const int taille_voie2[9] = { 170,275,200,182,170,210,150,180,195 };
 	const int rotation_voies[9] = { 335,338,305,270,225,210,215,300,320 };
-	std::default_random_engine re(time(0));
+	std::default_random_engine re(time(0)); //seed aléatoire pour la montée et descente des passagers
 	//Initialisation liste de stations
 	//Instalation de stations de métro dans notre système
   vector<station> liste_station;
@@ -183,22 +183,21 @@ int main()
 	}
 	//Initialisation des textures de Gare et de Wagon
 	sf::Texture TextureGare, TextureWagon;
-	if (!TextureGare.loadFromFile(std::string("C:/Program Files/SFML/img/gare.png")) || !TextureWagon.loadFromFile(std::string("C:/Program Files/SFML/img/RameMetro2.png")))
+	if (!TextureGare.loadFromFile(std::string("C:/Program Files/SFML/img/gare.png")) || !TextureWagon.loadFromFile(std::string("C:/Program Files/SFML/img/RameMetro.png")))
 	{
 		cerr << "Erreur pendant le chargement des images" << endl;
 
 	}
 	metro metro1 = metro(25, 1, 0, 0, 0, 1);
 	metro1.ChangementTextureWagon(TextureWagon);
-	metro metro2 = metro(10, 1, 0, 0, 0, 2);
+	metro metro2 = metro(10, 1, 0, 0, 0, 2); //création des 2 rames
 
 	int vit_const1 = 20;
-	int vit_const2 = 10;
+	int vit_const2 = 10; //vitesse des deux rames créees
 
-	int size = liste_station.size();
+	int size = liste_station.size(); //nombre de stations créées
 
 	const double pi = 3.14159265358979323846;
-	//test thread
 	bool stopped = false;
 	std::jthread rame1(
 		[&stopped, &re, &liste_station, &size, &metro1, &metro2, &vit_const1, &posX_voie1, &posY_voie1, &posX_voie2, &posY_voie2, &taille_voie1, &taille_voie2, &rotation_voies, &pi]
@@ -217,12 +216,12 @@ int main()
 					cout << "Progression de la rame 1 : " << pourcent << " %" << endl; //affichage de sa progression
 					metro1.set_position(pourcent + vit); //déplacement
 					//Affichage du wagon
-					if (metro1.reverse() == false) { //Si il est dans le sens des gare croissants
+					if (metro1.reverse() == false) { //S'il est dans le sens des gare croissants
 						metro1.ChangementPositionMetro(sf::Vector2f(posX_voie1[numero_station_suivante - 2] + cos(rotation_voies[numero_station_suivante - 2] * pi / 180 + pi /2) * taille_voie1[numero_station_suivante - 2] * pourcent * pow(10, -2), posY_voie1[numero_station_suivante - 2] + sin(rotation_voies[numero_station_suivante - 2] * pi /180 + pi /2) * taille_voie1[numero_station_suivante - 2] * pourcent * pow(10, -2)));
 						metro1.RotationMetro(rotation_voies[numero_station_suivante - 2] -180);
 						cout << "angle :" << rotation_voies[numero_station_suivante - 2] * pi / 280 << "cos : "<< cos(rotation_voies[numero_station_suivante - 2] * pi / 180 +pi/2) <<" sin : " << sin(rotation_voies[numero_station_suivante - 2] * pi / 180+pi/2) << endl;
 					}
-					else { //Si il est dans le sens des gare décroissants
+					else { //S'il est dans le sens des gare décroissants
 						metro1.ChangementPositionMetro(sf::Vector2f(posX_voie2[numero_station_suivante - 1] + cos(rotation_voies[numero_station_suivante - 1] * pi / 180 + pi / 2) * taille_voie2[numero_station_suivante - 1] * (1 - pourcent * pow(10, -2)), posY_voie2[numero_station_suivante - 1] + sin(rotation_voies[numero_station_suivante - 1] * pi / 180 + pi / 2) * taille_voie2[numero_station_suivante - 1] * (1 - pourcent * pow(10, -2))));
 						metro1.RotationMetro(rotation_voies[numero_station_suivante - 1] -180);
 						cout << "angle :" << rotation_voies[numero_station_suivante - 2] * pi / 280 << "cos : " << cos(rotation_voies[numero_station_suivante - 2] * pi / 180 + pi / 2) << " sin : " << sin(rotation_voies[numero_station_suivante - 2] * pi / 180 + pi / 2) << endl;
@@ -235,7 +234,7 @@ int main()
 					int stat_nom = metro1.get_station(); //récupération de la station atteinte
 					station stat_actu = liste_station.at(stat_nom - 1);
 					stat_actu.arrivage_train();
-					if(metro2.get_prochain_arret() == stat_nom){
+					if(metro2.get_prochain_arret() == stat_nom && metro2.reverse() == metro1.reverse()){ //si les deux rames ont le meme arret et sont dans le meme sens de parcours
 						cout << "Arret de la rame 2 pour maintenir une distance de securite" << endl;
 						metro2.freinage(vit_autre);
 					}
