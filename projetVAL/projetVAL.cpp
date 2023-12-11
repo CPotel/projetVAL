@@ -188,9 +188,9 @@ int main()
 		cerr << "Erreur pendant le chargement des images" << endl;
 
 	}
-	metro metro1 = metro(25, 1, 0, 0, 0, 1);
+	metro metro1 = metro(0, 1, 0, 0, 0, 1);
 	metro1.ChangementTextureWagon(TextureWagon);
-	metro metro2 = metro(10, 1, 0, 0, 0, 2); //création des 2 rames
+	metro metro2 = metro(0, 1, 0, 0, 0, 2); //création des 2 rames
 
 	int vit_const1 = 20;
 	int vit_const2 = 10; //vitesse des deux rames créees
@@ -203,15 +203,25 @@ int main()
 		[&stopped, &re, &liste_station, &size, &metro1, &metro2, &vit_const1, &posX_voie1, &posY_voie1, &posX_voie2, &posY_voie2, &taille_voie1, &taille_voie2, &rotation_voies, &pi]
 		{
 			cout << "Rame 1 prete" << endl;
-			metro1.acceleration(1); //départ de la rame de la zone de lancement
-			cout << "Rame 1 partie de la station de lancement avec " << metro1.get_passager_dedans() << " passagers." << endl;
+			metro1.ChangementPositionMetro(sf::Vector2f(posX_voie1[0], posY_voie1[0]));
+			metro1.RotationMetro(rotation_voies[0] - 180);
+			metro1.arrivee_station(size);
+			std::this_thread::sleep_for(5s);
+			cout << "Montee de passagers depuis la station 1 pour la rame 1" << endl;
+			int aquai = liste_station.at(metro1.get_station() - 1).get_passager();
+			std::uniform_int_distribution<int> montee_pif{ 0,aquai }; //montée d'un nombre aléatoire de passagers dans la rame depuis le quai (au moins 1)
+			int montee = montee_pif(re);
+			cout << "Montee de " << montee << " passagers dans la rame 1." << endl;
+			std::this_thread::sleep_for(montee * 0.25s);
+			cout << "Depart de la rame 1 de la station 1" << endl;
+			metro1.depart_station(1);
 			while (!stopped) { //tant qu'on a pas arrêté
-				std::this_thread::sleep_for(0.01s); //attente d'1s pour simuler le déplacement de la rame
+				std::this_thread::sleep_for(0.01s); //attente de 10ms pour simuler le déplacement de la rame
 				int pourcent = metro1.get_position(), pourcent_autre = metro2.get_position();
 				
 				int vit = metro1.get_vitesse(), vit_autre = metro2.get_vitesse(); //récupération de la position et de la vitesse de la rame
 				int numero_station_suivante = metro1.get_prochain_arret();
-				cout << "numero de station" << numero_station_suivante - 2 << endl;
+				cout << "numero de station : " << numero_station_suivante - 2 << endl;
 				if (pourcent < 100) { //si elle n'a pas atteint la station
 					cout << "Progression de la rame 1 : " << pourcent << " %" << endl; //affichage de sa progression
 					metro1.set_position(pourcent + vit); //déplacement
@@ -219,7 +229,7 @@ int main()
 					if (metro1.reverse() == false) { //S'il est dans le sens des gare croissants
 						metro1.ChangementPositionMetro(sf::Vector2f(posX_voie1[numero_station_suivante - 2] + cos(rotation_voies[numero_station_suivante - 2] * pi / 180 + pi /2) * taille_voie1[numero_station_suivante - 2] * pourcent * pow(10, -2), posY_voie1[numero_station_suivante - 2] + sin(rotation_voies[numero_station_suivante - 2] * pi /180 + pi /2) * taille_voie1[numero_station_suivante - 2] * pourcent * pow(10, -2)));
 						metro1.RotationMetro(rotation_voies[numero_station_suivante - 2] -180);
-						cout << "angle :" << rotation_voies[numero_station_suivante - 2] * pi / 280 << "cos : "<< cos(rotation_voies[numero_station_suivante - 2] * pi / 180 +pi/2) <<" sin : " << sin(rotation_voies[numero_station_suivante - 2] * pi / 180+pi/2) << endl;
+						cout << "angle : " << rotation_voies[numero_station_suivante - 2] * pi / 280 << "cos : "<< cos(rotation_voies[numero_station_suivante - 2] * pi / 180 +pi/2) <<" sin : " << sin(rotation_voies[numero_station_suivante - 2] * pi / 180+pi/2) << endl;
 					}
 					else { //S'il est dans le sens des gare décroissants
 						metro1.ChangementPositionMetro(sf::Vector2f(posX_voie2[numero_station_suivante - 1] + cos(rotation_voies[numero_station_suivante - 1] * pi / 180 + pi / 2) * taille_voie2[numero_station_suivante - 1] * (1 - pourcent * pow(10, -2)), posY_voie2[numero_station_suivante - 1] + sin(rotation_voies[numero_station_suivante - 1] * pi / 180 + pi / 2) * taille_voie2[numero_station_suivante - 1] * (1 - pourcent * pow(10, -2))));
@@ -252,7 +262,7 @@ int main()
 						cout << "Passage par la voie de demi-tour." << endl;
 						std::this_thread::sleep_for(5s);
 						cout << "Demi-tour effectue." << endl;
-						std::uniform_int_distribution<int> montee_terminus{ 1, aquai };//montée de passagers
+						std::uniform_int_distribution<int> montee_terminus{ 0, aquai };//montée de passagers
 						int montee = montee_terminus(re);
 						metro1.hausse_passager_dedans(montee);
 						aquai -= montee;
@@ -264,14 +274,14 @@ int main()
 						stat_actu.depart_train();
 					}
 					else{ //sinon
-						std::uniform_int_distribution<int> descente_pif{ 1, passagers }; //descente d'un nombre aléatoire de passagers de la rame (au moins 1)
+						std::uniform_int_distribution<int> descente_pif{ 0, passagers }; //descente d'un nombre aléatoire de passagers de la rame (au moins 1)
 						int descente = descente_pif(re);
 						cout << "Descente de " << descente << " passagers de la rame 1." << endl;
 						std::this_thread::sleep_for(descente * 0.25s);
 						metro1.baisse_passager_dedans(descente);
 						aquai += descente;
 						stat_actu.set_passager(aquai);
-						std::uniform_int_distribution<int> montee_pif{ 1,aquai }; //montée d'un nombre aléatoire de passagers dans la rame depuis le quai (au moins 1)
+						std::uniform_int_distribution<int> montee_pif{ 0,aquai }; //montée d'un nombre aléatoire de passagers dans la rame depuis le quai (au moins 1)
 						int montee = montee_pif(re);
 						cout << "Montee de " << montee << " passagers dans la rame 1." << endl;
 						std::this_thread::sleep_for(montee * 0.25s);
