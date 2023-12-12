@@ -12,6 +12,7 @@
 #include <chrono>
 #include <random>
 #include <cmath>
+#include <cstdlib>
 
 class station {
 private:
