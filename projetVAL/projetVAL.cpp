@@ -453,7 +453,7 @@ int main()
 			cout << "Depart de la rame 3 de la station 1" << endl;
 			metro3.depart_station(10);
 			while (!stopped) { //tant qu'on a pas arrêté
-				std::this_thread::sleep_for(0.1s); //attente de 10ms pour simuler le déplacement de la rame
+				std::this_thread::sleep_for(0.1s); //attente de 100ms pour simuler le déplacement de la rame
 				int pourcent = metro3.get_position();
 				int vit = metro3.get_vitesse(); //récupération de la position et de la vitesse de la rame
 				int numero_station_suivante = metro3.get_prochain_arret();
