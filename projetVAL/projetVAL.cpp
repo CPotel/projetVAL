@@ -200,8 +200,12 @@ int main()
 
 	const double pi = 3.14159265358979323846;
 	bool stopped = false;
+
+	bool panne1 = false;
+	bool panne2 = false;
+	bool panne3 = false;
 	std::jthread rame1(
-		[&stopped, &re, &liste_station, &size, &metro1, &metro2, &metro3, &posX_voie, &posY_voie1, &posY_voie2, &taille_voie, &pi, &taille_metro]
+		[&stopped, &re, &liste_station, &size, &metro1, &metro2, &metro3, &posX_voie, &posY_voie1, &posY_voie2, &taille_voie, &pi, &taille_metro, &panne1, &panne2, &panne3]
 		{
 			cout << "Rame 1 prete" << endl;
 			metro1.ChangementPositionMetro(sf::Vector2f(posX_voie[0], posY_voie1));
@@ -267,8 +271,8 @@ int main()
 						std::this_thread::sleep_for(montee * 0.25s);
 						cout << "Depart de la rame 1 de la station " << station_atteinte << endl;
 						//On vérifie s'il n'y a pas déjà une rame de présente sur le parcours
-						while (((metro1.get_prochain_arret() == (metro2.get_prochain_arret() || metro2.get_station())) && metro1.reverse() == metro2.reverse()) || ((metro1.get_prochain_arret() == (metro3.get_prochain_arret() || metro3.get_station())) && metro1.reverse() == metro2.reverse())) {
-							cout << "Metro 1 bloqué en raison d'une autre rame de métro présente à la station suivante" << endl;
+						while (((metro1.get_prochain_arret() == metro2.get_prochain_arret() || metro1.get_prochain_arret() == metro2.get_station()) && metro1.reverse() == metro2.reverse()) || ((metro1.get_prochain_arret() == metro3.get_prochain_arret() || metro1.get_prochain_arret() == metro3.get_station()) && metro1.reverse() == metro2.reverse())) {
+							cout << "Metro 1 bloque en raison d'une autre rame de metro presente a la station suivante" << endl;
 						}
 						metro1.depart_station(vit); //début du trajet en sens inverse
 						stat_actu.depart_train();
@@ -289,7 +293,7 @@ int main()
 						aquai -= montee;
 						stat_actu.set_passager(aquai);
 						cout << "Depart de la rame 1 de la station " << station_atteinte << endl;
-						while (((metro1.get_prochain_arret() == (metro2.get_prochain_arret() || metro2.get_station())) && metro1.reverse() == metro2.reverse()) || ((metro1.get_prochain_arret() == (metro3.get_prochain_arret() || metro3.get_station())) && metro1.reverse() == metro2.reverse())) {
+						while (((metro1.get_prochain_arret() == metro2.get_prochain_arret() || metro1.get_prochain_arret() == metro2.get_station()) && metro1.reverse() == metro2.reverse()) || ((metro1.get_prochain_arret() == metro3.get_prochain_arret() || metro1.get_prochain_arret() == metro3.get_station()) && metro1.reverse() == metro2.reverse())) {
 							cout << "Metro 1 bloqué en raison d'une autre rame de métro présente à la station suivante" << endl;
 						}
 						metro1.depart_station(vit); //reprise du trajet
@@ -301,7 +305,7 @@ int main()
 	);
 	//affichage sur une console :
 	std::jthread rame2(
-		[&stopped, &re, &liste_station, &size, &metro1, &metro2, &metro3, &posX_voie, &posY_voie1, &posY_voie2, &taille_voie, &pi, &taille_metro]
+		[&stopped, &re, &liste_station, &size, &metro1, &metro2, &metro3, &posX_voie, &posY_voie1, &posY_voie2, &taille_voie, &pi, &taille_metro, &panne1, &panne2, &panne3]
 		{
 			cout << "Rame 2 prete" << endl;
 			metro2.ChangementPositionMetro(sf::Vector2f(posX_voie[0], posY_voie1));
@@ -367,7 +371,7 @@ int main()
 						std::this_thread::sleep_for(3s);
 						cout << "Depart de la rame 2 de la station " << stat_nom << endl;
 						//On vérifie s'il n'y a pas déjà une rame de présente sur le parcours
-						while (((metro2.get_prochain_arret() == (metro1.get_prochain_arret() || metro1.get_station())) && metro1.reverse() == metro2.reverse()) || ((metro2.get_prochain_arret() == (metro3.get_prochain_arret() || metro3.get_station())) && metro2.reverse() == metro3.reverse())) {
+						while (((metro2.get_prochain_arret() == metro1.get_prochain_arret() || metro2.get_prochain_arret() == metro1.get_station()) && metro1.reverse() == metro2.reverse()) || ((metro2.get_prochain_arret() == metro3.get_prochain_arret() || metro1.get_prochain_arret() == metro3.get_station()) && metro2.reverse() == metro3.reverse())) {
 							cout << "Metro 2 bloqué en raison d'une autre rame de métro présente à la station suivante" << endl;
 						}
 						metro2.depart_station(vit); //début du trajet en sens inverse
@@ -390,7 +394,7 @@ int main()
 						stat_actu.set_passager(aquai);
 						cout << "Depart de la rame 1 de la station " << stat_nom << endl;
 						//On vérifie s'il n'y a pas déjà une rame de présente sur le parcours
-						while (((metro2.get_prochain_arret() == (metro1.get_prochain_arret() || metro1.get_station())) && metro1.reverse() == metro2.reverse()) || ((metro2.get_prochain_arret() == (metro3.get_prochain_arret() || metro3.get_station())) && metro2.reverse() == metro3.reverse())) {
+						while (((metro2.get_prochain_arret() == metro1.get_prochain_arret() || metro2.get_prochain_arret() == metro1.get_station()) && metro1.reverse() == metro2.reverse()) || ((metro2.get_prochain_arret() == metro3.get_prochain_arret() || metro2.get_prochain_arret() == metro3.get_station()) && metro2.reverse() == metro3.reverse())) {
 							cout << "Metro 2 bloqué en raison d'une autre rame de métro présente à la station suivante" << endl;
 						}
 						metro2.depart_station(vit); //reprise du trajet
@@ -402,7 +406,7 @@ int main()
 	);
 
 	std::jthread rame3(
-		[&stopped, &re, &liste_station, &size, &metro1, &metro2, &metro3, &posX_voie, &posY_voie1, &posY_voie2, &taille_voie, &pi, &taille_metro]
+		[&stopped, &re, &liste_station, &size, &metro1, &metro2, &metro3, &posX_voie, &posY_voie1, &posY_voie2, &taille_voie, &pi, &taille_metro, &panne3, &panne1, &panne2]
 		{
 			cout << "Rame 3 prete" << endl;
 			metro3.ChangementPositionMetro(sf::Vector2f(posX_voie[0], posY_voie1));
@@ -468,7 +472,7 @@ int main()
 						std::this_thread::sleep_for(montee * 0.25s);
 						cout << "Depart de la rame 3 de la station " << stat_nom << endl;
 						//On vérifie s'il n'y a pas déjà une rame de présente sur le parcours
-						while (((metro3.get_prochain_arret() == (metro1.get_prochain_arret() || metro1.get_station())) && metro1.reverse() == metro3.reverse()) || ((metro3.get_prochain_arret() == (metro2.get_prochain_arret() || metro2.get_station())) && metro2.reverse() == metro3.reverse())) {
+						while (((metro3.get_prochain_arret() == metro1.get_prochain_arret() || metro3.get_prochain_arret() == metro1.get_station()) && metro1.reverse() == metro3.reverse()) || ((metro3.get_prochain_arret() == metro2.get_prochain_arret() || metro3.get_prochain_arret() == metro2.get_station()) && metro2.reverse() == metro3.reverse())) {
 							cout << "Metro 3 bloqué en raison d'une autre rame de métro présente à la station suivante" << metro3.get_prochain_arret() << metro2.get_prochain_arret() << metro1.get_prochain_arret() << metro2.get_station() << metro1.get_station() << endl;
 						}
 						metro3.depart_station(vit); //début du trajet en sens inverse
@@ -491,7 +495,7 @@ int main()
 						stat_actu.set_passager(aquai);
 						cout << "Depart de la rame 3 de la station " << stat_nom << endl;
 						//On vérifie s'il n'y a pas déjà une rame de présente sur le parcours
-						while (((metro3.get_prochain_arret() == (metro1.get_prochain_arret() || metro1.get_station())) && metro1.reverse() == metro3.reverse()) || ((metro3.get_prochain_arret() == (metro2.get_prochain_arret() || metro2.get_station())) && metro2.reverse() == metro3.reverse())) {
+						while (((metro3.get_prochain_arret() == metro1.get_prochain_arret() || metro3.get_prochain_arret() == metro1.get_station()) && metro1.reverse() == metro3.reverse()) || ((metro3.get_prochain_arret() == metro2.get_prochain_arret() || metro3.get_prochain_arret() == metro2.get_station()) && metro2.reverse() == metro3.reverse())) {
 							cout << "Metro 3 bloqué en raison d'une autre rame de métro présente à la station suivante" << metro3.get_prochain_arret() << metro2.get_prochain_arret() << metro1.get_prochain_arret() << metro2.get_station() << metro1.get_station() << endl;
 						}
 						metro3.depart_station(vit); //reprise du trajet
