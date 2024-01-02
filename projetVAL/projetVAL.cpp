@@ -216,9 +216,9 @@ int main()
 			metro1.depart_station(10);
 			while (!stopped) { //tant qu'on a pas arrêté
 				std::this_thread::sleep_for(0.001s); //attente de 10ms pour simuler le déplacement de la rame
-				int pourcent = metro1.get_position(), pourcent_autre = metro2.get_position();
+				int pourcent = metro1.get_position(), pourcent_autre2 = metro2.get_position(), pourcent_autre3 = metro3.get_position();
 
-				int vit = metro1.get_vitesse(), vit_autre = metro2.get_vitesse(); //récupération de la position et de la vitesse de la rame
+				int vit = metro1.get_vitesse(), vit_autre2 = metro2.get_vitesse(), vit_autre3 = metro3.get_vitesse(); //récupération de la position et de la vitesse de la rame
 				int numero_station_suivante = metro1.get_prochain_arret();
 				cout << "numero de station : " << numero_station_suivante - 2 << endl;
 				if (pourcent < 100) { //si elle n'a pas atteint la station
@@ -242,7 +242,11 @@ int main()
 					stat_actu.arrivage_train();
 					if (metro2.get_prochain_arret() == stat_nom && metro2.reverse() == metro1.reverse()) { //si les deux rames ont le meme arret et sont dans le meme sens de parcours
 						cout << "Arret de la rame 2 pour maintenir une distance de securite" << endl;
-						metro2.freinage(vit_autre);
+						metro2.freinage(vit_autre2);
+					}
+					if (metro3.get_prochain_arret() == stat_nom && metro3.reverse() == metro1.reverse()) {
+						cout << "Arret de la rame 3 pour maintenir une distance de securite" << endl;
+						metro3.freinage(vit_autre3);
 					}
 					cout << "Arrivee de la rame 1 a la station numero " << stat_nom << endl;
 					int passagers = metro1.get_passager_dedans();
@@ -309,9 +313,9 @@ int main()
 			metro2.depart_station(10);
 			while (!stopped) { //tant qu'on a pas arrêté
 				std::this_thread::sleep_for(0.001s); //attente de 10ms pour simuler le déplacement de la rame
-				int pourcent = metro2.get_position(), pourcent_autre = metro3.get_position();
+				int pourcent = metro2.get_position(), pourcent_autre3 = metro3.get_position(), pourcent_autre1 = metro1.get_position();
 
-				int vit = metro3.get_vitesse(), vit_autre = metro3.get_vitesse(); //récupération de la position et de la vitesse de la rame
+				int vit = metro2.get_vitesse(), vit_autre3 = metro3.get_vitesse(), vit_autre1 = metro1.get_vitesse(); //récupération de la position et de la vitesse de la rame
 				int numero_station_suivante = metro2.get_prochain_arret();
 				cout << "numero de station : " << numero_station_suivante - 2 << endl;
 				if (pourcent < 100) { //si elle n'a pas atteint la station
@@ -335,7 +339,11 @@ int main()
 					stat_actu.arrivage_train();
 					if (metro3.get_prochain_arret() == stat_nom && metro3.reverse() == metro2.reverse()) { //si les deux rames ont le meme arret et sont dans le meme sens de parcours
 						cout << "Arret de la rame 2 pour maintenir une distance de securite" << endl;
-						metro2.freinage(vit_autre);
+						metro3.freinage(vit_autre3);
+					}
+					if (metro1.get_prochain_arret() == stat_nom && metro1.reverse() == metro2.reverse()) {
+						cout << "Arret de la rame 1 pour maintenir une distance de securite" << endl;
+						metro1.freinage(vit_autre1);
 					}
 					cout << "Arrivee de la rame 2 a la station numero " << stat_nom << endl;
 					int passagers = metro2.get_passager_dedans();
@@ -402,9 +410,9 @@ int main()
 			metro3.depart_station(10);
 			while (!stopped) { //tant qu'on a pas arrêté
 				std::this_thread::sleep_for(0.001s); //attente de 10ms pour simuler le déplacement de la rame
-				int pourcent = metro3.get_position(), pourcent_autre = metro2.get_position();
+				int pourcent = metro3.get_position(), pourcent_autre2 = metro2.get_position(), pourcent_autre1 = metro1.get_position();
 
-				int vit = metro3.get_vitesse(), vit_autre = metro1.get_vitesse(); //récupération de la position et de la vitesse de la rame
+				int vit = metro3.get_vitesse(), vit_autre1 = metro1.get_vitesse(), vit_autre2 = metro2.get_vitesse(); //récupération de la position et de la vitesse de la rame
 				int numero_station_suivante = metro3.get_prochain_arret();
 				cout << "numero de station : " << numero_station_suivante - 2 << endl;
 				if (pourcent < 100) { //si elle n'a pas atteint la station
@@ -426,9 +434,13 @@ int main()
 					int stat_nom = metro3.get_station(); //récupération de la station atteinte
 					station stat_actu = liste_station.at(stat_nom - 1);
 					stat_actu.arrivage_train();
-					if (metro3.get_prochain_arret() == stat_nom && metro1.reverse() == metro3.reverse()) { //si les deux rames ont le meme arret et sont dans le meme sens de parcours
+					if (metro1.get_prochain_arret() == stat_nom && metro1.reverse() == metro3.reverse()) { //si les deux rames ont le meme arret et sont dans le meme sens de parcours
 						cout << "Arret de la rame 1 pour maintenir une distance de securite" << endl;
-						metro1.freinage(vit_autre);
+						metro1.freinage(vit_autre1);
+					}
+					if (metro2.get_prochain_arret() == stat_nom && metro2.reverse() == metro3.reverse()) {
+						cout << "Arret de la rame 2 pour maintenir une distance de securite" << endl;
+						metro2.freinage(vit_autre2);
 					}
 					cout << "Arrivee de la rame 3 a la station numero " << stat_nom << endl;
 					int passagers = metro3.get_passager_dedans();
