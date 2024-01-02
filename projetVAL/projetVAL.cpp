@@ -216,11 +216,28 @@ int main()
 			metro1.depart_station(10);
 			while (!stopped) { //tant qu'on a pas arrêté
 				std::this_thread::sleep_for(0.1s); //attente de 10ms pour simuler le déplacement de la rame
-				int pourcent = metro1.get_position(), pourcent_autre = metro2.get_position();
-				int vit = metro1.get_vitesse(), vit_autre = metro2.get_vitesse(); //récupération de la position et de la vitesse de la rame
+				int pourcent = metro1.get_position();
+				int vit = metro1.get_vitesse(); //récupération de la position et de la vitesse de la rame
 				int numero_station_suivante = metro1.get_prochain_arret();
 				cout << "numero de station : " << numero_station_suivante - 2 << endl;
+				if (panne2) {
+					cout << "Panne de la rame 2, trafic perturbe" << endl;
+					std::this_thread::sleep_for(30s);
+				}
+				if (panne3) {
+					cout << "Panne de la rame 3, trafic perturbe" << endl;
+					std::this_thread::sleep_for(30s);
+				}
 				if (pourcent < 100) { //si elle n'a pas atteint la station
+					std::uniform_int_distribution<int> chance_panne{ 0,999 };
+					int panne_pot = chance_panne(re);
+					if (panne_pot == 449) {
+						panne1 = true;
+						cout << "La rame 1 vient de tomber en panne ! Le probleme est en train d'etre traite" << endl;
+						std::this_thread::sleep_for(30s);
+						cout << "La rame 1 est de nouveau operationnelle ! " << endl;
+						panne1 = false;
+					}
 					cout << "Progression de la rame 1 : " << pourcent << " %" << endl; //affichage de sa progression
 					metro1.set_position(pourcent + vit); //déplacement
 					//Affichage du wagon
@@ -316,12 +333,28 @@ int main()
 			metro2.depart_station(10);
 			while (!stopped) { //tant qu'on a pas arrêté
 				std::this_thread::sleep_for(0.1s); //attente de 10ms pour simuler le déplacement de la rame
-				int pourcent = metro2.get_position(), pourcent_autre = metro3.get_position();
-
-				int vit = metro3.get_vitesse(), vit_autre = metro3.get_vitesse(); //récupération de la position et de la vitesse de la rame
+				int pourcent = metro2.get_position();
+				int vit = metro2.get_vitesse(); //récupération de la position et de la vitesse de la rame
 				int numero_station_suivante = metro2.get_prochain_arret();
 				cout << "numero de station : " << numero_station_suivante - 2 << endl;
+				if (panne1) {
+					cout << "Panne de la rame 1, trafic perturbe" << endl;
+					std::this_thread::sleep_for(30s);
+				}
+				if (panne3) {
+					cout << "Panne de la rame 3, trafic perturbe" << endl;
+					std::this_thread::sleep_for(30s);
+				}
 				if (pourcent < 100) { //si elle n'a pas atteint la station
+					std::uniform_int_distribution<int> chance_panne{ 0,999 };
+					int panne_pot = chance_panne(re);
+					if (panne_pot == 16) {
+						panne2 = true;
+						cout << "La rame 2 vient de tomber en panne ! Le probleme est en train d'etre traite" << endl;
+						std::this_thread::sleep_for(30s);
+						cout << "La rame 2 est de nouveau operationnelle" << endl;
+						panne2 = false;
+					}
 					cout << "Progression de la rame 2 : " << pourcent << " %" << endl; //affichage de sa progression
 					metro2.set_position(pourcent + vit); //déplacement
 					//Affichage du wagon
@@ -417,11 +450,28 @@ int main()
 			metro3.depart_station(10);
 			while (!stopped) { //tant qu'on a pas arrêté
 				std::this_thread::sleep_for(0.1s); //attente de 10ms pour simuler le déplacement de la rame
-				int pourcent = metro3.get_position(), pourcent_autre = metro2.get_position();
-				int vit = metro3.get_vitesse(), vit_autre = metro1.get_vitesse(); //récupération de la position et de la vitesse de la rame
+				int pourcent = metro3.get_position();
+				int vit = metro3.get_vitesse(); //récupération de la position et de la vitesse de la rame
 				int numero_station_suivante = metro3.get_prochain_arret();
 				cout << "numero de station : " << numero_station_suivante - 2 << endl;
+				if (panne1) {
+					cout << "Panne de la rame 1, trafic perturbe" << endl;
+					std::this_thread::sleep_for(30s);
+				}
+				if (panne2) {
+					cout << "Panne de la rame 2, trafic perturbe" << endl;
+					std::this_thread::sleep_for(30s);
+				}
 				if (pourcent < 100) { //si elle n'a pas atteint la station
+					std::uniform_int_distribution<int> chance_panne{ 0,999 };
+					int panne_pot = chance_panne(re);
+					if (panne_pot == 792) {
+						panne3 = true;
+						cout << "La rame 3 vient de tomber en panne ! Le probleme est en train d'etre traite" << endl;
+						std::this_thread::sleep_for(30s);
+						cout << "La rame 3 est de nouveau operationnelle ! " << endl;
+						panne3 = false;
+					}
 					cout << "Progression de la rame 3 : " << pourcent << " %" << endl; //affichage de sa progression
 					metro3.set_position(pourcent + vit); //déplacement
 					//Affichage du wagon
