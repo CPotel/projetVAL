@@ -200,8 +200,11 @@ int main()
 
 	const double pi = 3.14159265358979323846;
 	bool stopped = false;
+	bool panne1 = false;
+	bool panne2 = false;
+	bool panne3 = false;
 	std::jthread rame1(
-		[&stopped, &re, &liste_station, &size, &metro1, &metro2, &metro3, &posX_voie, &posY_voie1, &posY_voie2, &taille_voie, &pi, &taille_metro]
+		[&stopped, &re, &liste_station, &size, &metro1, &metro2, &metro3, &posX_voie, &posY_voie1, &posY_voie2, &taille_voie, &pi, &taille_metro, &panne1, &panne2, &panne3]
 		{
 			cout << "Rame 1 prete" << endl;
 			metro1.ChangementPositionMetro(sf::Vector2f(posX_voie[0], posY_voie1));
@@ -318,7 +321,7 @@ int main()
 	);
 	//affichage sur une console :
 	std::jthread rame2(
-		[&stopped, &re, &liste_station, &size, &metro1, &metro2, &metro3, &posX_voie, &posY_voie1, &posY_voie2, &taille_voie, &pi, &taille_metro]
+		[&stopped, &re, &liste_station, &size, &metro1, &metro2, &metro3, &posX_voie, &posY_voie1, &posY_voie2, &taille_voie, &pi, &taille_metro, &panne1, &panne2, &panne3]
 		{
 			cout << "Rame 2 prete" << endl;
 			metro2.ChangementPositionMetro(sf::Vector2f(posX_voie[0], posY_voie1));
@@ -435,7 +438,7 @@ int main()
 	);
 
 	std::jthread rame3(
-		[&stopped, &re, &liste_station, &size, &metro1, &metro2, &metro3, &posX_voie, &posY_voie1, &posY_voie2, &taille_voie, &pi, &taille_metro]
+		[&stopped, &re, &liste_station, &size, &metro1, &metro2, &metro3, &posX_voie, &posY_voie1, &posY_voie2, &taille_voie, &pi, &taille_metro, &panne1, &panne2, &panne3]
 		{
 			cout << "Rame 3 prete" << endl;
 			metro3.ChangementPositionMetro(sf::Vector2f(posX_voie[0], posY_voie1));
@@ -584,6 +587,17 @@ int main()
 		liste_station[i].ChangementTailleVoie2(sf::Vector2f(2, taille_voie[i]));
 		liste_station[i].RotationVoie(270);
 	}
+	//Affichage des voies de demi tour
+	sf::RectangleShape demi_tour1, demi_tour2;
+	demi_tour1.setPosition(sf::Vector2f(PosXGare[0], PosYGare + 25));
+	demi_tour2.setPosition(sf::Vector2f(PosXGare[8] + 50, PosYGare + 25));
+	demi_tour1.setSize(sf::Vector2f(2, 90));
+	demi_tour2.setSize(sf::Vector2f(2, 90));
+	demi_tour1.setRotation(90);
+	demi_tour2.setRotation(270);
+	demi_tour1.setFillColor(sf::Color(0, 0, 0));
+	demi_tour2.setFillColor(sf::Color(0, 0, 0));
+
 
 	while (window.isOpen())
 	{
@@ -605,7 +619,8 @@ int main()
 		metro1.AffichageMetro(window);
 		metro2.AffichageMetro(window);
 		metro3.AffichageMetro(window);
-
+		window.draw(demi_tour1);
+		window.draw(demi_tour2);
 		window.display();
 	}
 }
