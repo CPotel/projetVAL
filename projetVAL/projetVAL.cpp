@@ -605,6 +605,7 @@ int main()
 		metro1.AffichageMetro(window);
 		metro2.AffichageMetro(window);
 		metro3.AffichageMetro(window);
+
 		window.display();
 	}
 }
