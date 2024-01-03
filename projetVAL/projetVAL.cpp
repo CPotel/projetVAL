@@ -191,24 +191,26 @@ int main()
 	}
 	metro metro1 = metro(0, 1, 0, 0, 0, 1);
 	metro1.ChangementTextureWagon(TextureWagon);
-	metro metro2 = metro(0, 2, 0, 0, 0, 2); //création des 2 rames
+	metro metro2 = metro(0, 2, 0, 0, 0, 2);
 	metro2.ChangementTextureWagon(TextureWagon);
 	metro metro3 = metro(0, 3, 0, 0, 0, 3);
 	metro3.ChangementTextureWagon(TextureWagon);
 
 	int size = liste_station.size(); //nombre de stations créées
 
-	const double pi = 3.14159265358979323846;
 	bool stopped = false;
 	bool panne1 = false;
 	bool panne2 = false;
 	bool panne3 = false;
+
+	cout << metro1.get_prochain_arret() << "	" << metro2.get_prochain_arret() << "	" << metro3.get_prochain_arret();
+	
 	std::jthread rame1(
-		[&stopped, &re, &liste_station, &size, &metro1, &metro2, &metro3, &posX_voie, &posY_voie1, &posY_voie2, &taille_voie, &pi, &taille_metro, &panne1, &panne2, &panne3]
+		[&stopped, &re, &liste_station, &size, &metro1, &metro2, &metro3, &posX_voie, &posY_voie1, &posY_voie2, &taille_voie, &taille_metro, &panne1, &panne2, &panne3]
 		{
 			cout << "Rame 1 prete" << endl;
 			//On effectue un premier affichage du metro
-			metro1.ChangementPositionMetro(sf::Vector2f(posX_voie[0] + 50, posY_voie1 - 50));
+			metro1.ChangementPositionMetro(sf::Vector2f(posX_voie[0], posY_voie1 - 30));
 			//On indique qu'il est dans la gare
 			metro1.arrivee_station(size);
 			//On fait monter des passagers
@@ -218,19 +220,18 @@ int main()
 			int montee = montee_pif(re);
 			cout << "Montee de " << montee << " passagers dans la rame 1." << endl;
 			//Le temps d'attente dans une gare est de 3 secondes
-			std::this_thread::sleep_for(3s);
+			std::this_thread::sleep_for(5s);
 			//On organise le premier départ
 			cout << "Depart de la rame 1 de la station 1" << endl;
 			metro1.depart_station(10);
 			//Boucle infinie permettant de réaliser le mouvement du métro
 			while (!stopped) { 
 				//On fait une pause dans le thread afin de simuler un déplacement du métro
-				std::this_thread::sleep_for(0.1s);
+				std::this_thread::sleep_for(0.2s);
 				//On récupère la position du metro, sa vitesse ainsi que la station d'arret suivante
 				int pourcent = metro1.get_position();
 				int vit = metro1.get_vitesse();
-				int numero_station_suivante = metro1.get_prochain_arret();
-				cout << "numero de station suivante : " << numero_station_suivante << endl;
+				int numero_station_suivante1 = metro1.get_prochain_arret();
 				//On récupère les pannes des autres metros, si une est active on arrête le métro pour 30 secondes
 				if (panne2) {
 					cout << "Panne de la rame 2, trafic perturbe" << endl;
@@ -254,17 +255,17 @@ int main()
 						panne1 = false;
 					}
 					//S'il n'y a pas de panne, alors on déplace le métro et on l'affiche
-					cout << "Progression de la rame 1 : " << pourcent << " %" << endl; //affichage de sa progression
+					cout << "Progression de la rame 1 : " << pourcent << " %" << "		numero de station suivante : " << numero_station_suivante1 << endl; //affichage de sa progression
 					metro1.set_position(pourcent + vit); //déplacement
 					
 					//Affichage du wagon :
 					//S'il est dans le sens des gare croissants
 					if (metro1.reverse() == false) {
-						metro1.ChangementPositionMetro(sf::Vector2f(posX_voie[numero_station_suivante - 2] + pourcent * pow(10, -2) * taille_voie[numero_station_suivante - 2] - (taille_metro[0] * pow(10, -1)) / 2, posY_voie1 - taille_metro[1] * pow(10, -1)));
+						metro1.ChangementPositionMetro(sf::Vector2f(posX_voie[numero_station_suivante1 - 2] + pourcent * pow(10, -2) * taille_voie[numero_station_suivante1 - 2] - (taille_metro[0] * pow(10, -1)) / 2, posY_voie1 - taille_metro[1] * pow(10, -1)));
 					}
 					//S'il est dans le sens des gare décroissants
 					else { 
-						metro1.ChangementPositionMetro(sf::Vector2f(posX_voie[numero_station_suivante - 1] + taille_voie[numero_station_suivante - 1] * (1 - pourcent * pow(10, -2)) + (taille_metro[0] * pow(10, -1)) / 2, posY_voie2 + taille_metro[1] * pow(10, -1)));
+						metro1.ChangementPositionMetro(sf::Vector2f(posX_voie[numero_station_suivante1 - 1] + taille_voie[numero_station_suivante1 - 1] * (1 - pourcent * pow(10, -2)) + (taille_metro[0] * pow(10, -1)) / 2, posY_voie2 + taille_metro[1] * pow(10, -1)));
 						metro1.RotationMetro(180);
 					}
 				}
@@ -312,7 +313,7 @@ int main()
 						std::this_thread::sleep_for(3s);
 						cout << "Depart de la rame 1 de la station " << station_atteinte << endl;
 						//On vérifie s'il n'y a pas déjà une rame de présente sur le parcours
-						while (((metro1.get_prochain_arret() == (metro2.get_prochain_arret() || metro2.get_station())) && metro1.reverse() == metro2.reverse()) || ((metro1.get_prochain_arret() == (metro3.get_prochain_arret() || metro3.get_station())) && metro1.reverse() == metro2.reverse())) {
+						while (((metro1.get_prochain_arret() == (metro2.get_prochain_arret() || metro2.get_station())) /* && metro1.reverse() == metro2.reverse()*/) || ((metro1.get_prochain_arret() == (metro3.get_prochain_arret() || metro3.get_station()))/* && metro1.reverse() == metro2.reverse()*/)) {
 							//On ne fait pas redémarrer le metro tant qu'une rame bloque la voie
 							cout << "Metro 1 bloqué en raison d'une autre rame de métro présente à la station suivante" << endl;
 						}
@@ -342,7 +343,7 @@ int main()
 
 						cout << "Depart de la rame 1 de la station " << station_atteinte << endl;
 						//On vérifie s'il n'y a pas déjà une rame de présente sur le parcours
-						while (((metro1.get_prochain_arret() == (metro2.get_prochain_arret() || metro2.get_station())) && metro1.reverse() == metro2.reverse()) || ((metro1.get_prochain_arret() == (metro3.get_prochain_arret() || metro3.get_station())) && metro1.reverse() == metro2.reverse())) {
+						while (((metro1.get_prochain_arret() == (metro2.get_prochain_arret() || metro2.get_station()))/* && metro1.reverse() == metro2.reverse()*/) || ((metro1.get_prochain_arret() == (metro3.get_prochain_arret() || metro3.get_station())) /* && metro1.reverse() == metro2.reverse()*/)) {
 							//On ne fait pas redémarrer le metro tant qu'une rame bloque la voie
 							cout << "Metro 1 bloqué en raison d'une autre rame de métro présente à la station suivante" << endl;
 						}
@@ -355,12 +356,13 @@ int main()
 		}
 	);
 	//affichage sur une console :
+	
 	std::jthread rame2(
-		[&stopped, &re, &liste_station, &size, &metro1, &metro2, &metro3, &posX_voie, &posY_voie1, &posY_voie2, &taille_voie, &pi, &taille_metro, &panne1, &panne2, &panne3]
+		[&stopped, &re, &liste_station, &size, &metro1, &metro2, &metro3, &posX_voie, &posY_voie1, &posY_voie2, &taille_voie, &taille_metro, &panne1, &panne2, &panne3]
 		{
 			cout << "Rame 2 prete" << endl;
 			//On effectue un premier affichage du metro
-			metro2.ChangementPositionMetro(sf::Vector2f(posX_voie[0] + 50, posY_voie1 - 50));
+			metro2.ChangementPositionMetro(sf::Vector2f(posX_voie[1], posY_voie1 - 30));
 			//On indique qu'il est dans la gare
 			metro2.arrivee_station(size);
 			//On fait monter des passagers
@@ -370,19 +372,19 @@ int main()
 			int montee = montee_pif(re);
 			cout << "Montee de " << montee << " passagers dans la rame 2." << endl;
 			//Le temps d'attente dans une gare est de 3 secondes
-			std::this_thread::sleep_for(3s);
+			std::this_thread::sleep_for(5s);
 			//On organise le premier départ
 			cout << "Depart de la rame 2 de la station 2" << endl;
 			metro2.depart_station(10);
 			//Boucle infinie permettant de réaliser le mouvement du métro
 			while (!stopped) {
 				//On fait une pause dans le thread afin de simuler un déplacement du métro
-				std::this_thread::sleep_for(1s); 
+				std::this_thread::sleep_for(0.2s); 
 				//On récupère la position du metro, sa vitesse ainsi que la station d'arret suivante
 				int pourcent = metro2.get_position();
-				int vit = metro2.get_vitesse(); //récupération de la position et de la vitesse de la rame
-				int numero_station_suivante = metro2.get_prochain_arret();
-				cout << "numero de station suivante : " << numero_station_suivante << endl;
+				int vit = metro2.get_vitesse(); 
+				int numero_station_suivante2 = metro2.get_prochain_arret();
+				
 				//On récupère les pannes des autres metros, si une est active on arrête le métro pour 30 secondes
 				if (panne1) {
 					cout << "Panne de la rame 1, trafic perturbe" << endl;
@@ -407,17 +409,17 @@ int main()
 						panne2 = false;
 					}
 					//S'il n'y a pas de panne, alors on déplace le métro et on l'affiche
-					cout << "Progression de la rame 2 : " << pourcent << " %" << endl; //affichage de sa progression
+					cout << "Progression de la rame 2 : " << pourcent << " %" << "		numero de station suivante : " << numero_station_suivante2 << endl; //affichage de sa progression
 					metro2.set_position(pourcent + vit); //déplacement
 					
 					//Affichage du wagon
 					//S'il est dans le sens des gare croissants
 					if (metro2.reverse() == false) { 
-						metro2.ChangementPositionMetro(sf::Vector2f(posX_voie[numero_station_suivante - 2] + pourcent * pow(10, -2) * taille_voie[numero_station_suivante - 2] - (taille_metro[0] * pow(10, -1)) / 2, posY_voie1 - taille_metro[1] * pow(10, -1)));
+						metro2.ChangementPositionMetro(sf::Vector2f(posX_voie[numero_station_suivante2 - 2] + pourcent * pow(10, -2) * taille_voie[numero_station_suivante2 - 2] - (taille_metro[0] * pow(10, -1)) / 2, posY_voie1 - taille_metro[1] * pow(10, -1)));
 					}
 					//S'il est dans le sens des gare décroissants
 					else { 
-						metro2.ChangementPositionMetro(sf::Vector2f(posX_voie[numero_station_suivante - 1] + taille_voie[numero_station_suivante - 1] * (1 - pourcent * pow(10, -2)) + (taille_metro[0] * pow(10, -1)) / 2, posY_voie2 + taille_metro[1] * pow(10, -1)));
+						metro2.ChangementPositionMetro(sf::Vector2f(posX_voie[numero_station_suivante2 - 1] + taille_voie[numero_station_suivante2 - 1] * (1 - pourcent * pow(10, -2)) + (taille_metro[0] * pow(10, -1)) / 2, posY_voie2 + taille_metro[1] * pow(10, -1)));
 						metro2.RotationMetro(180);
 					}
 				}
@@ -463,7 +465,7 @@ int main()
 						std::this_thread::sleep_for(3s);
 						cout << "Depart de la rame 2 de la station " << stat_nom << endl;
 						//On vérifie s'il n'y a pas déjà une rame de présente sur le parcours
-						while (((metro2.get_prochain_arret() == (metro1.get_prochain_arret() | metro1.get_station())) && metro1.reverse() == metro2.reverse()) || ((metro2.get_prochain_arret() == (metro3.get_prochain_arret() | metro3.get_station())) && metro2.reverse() == metro3.reverse())) {
+						while (((metro2.get_prochain_arret() == (metro1.get_prochain_arret() || metro1.get_station())) /* && metro1.reverse() == metro2.reverse()*/) || ((metro2.get_prochain_arret() == (metro3.get_prochain_arret() || metro3.get_station())) /* && metro2.reverse() == metro3.reverse()*/)) {
 							//On ne fait pas redémarrer le metro tant qu'une rame bloque la voie
 							cout << "Metro 2 bloqué en raison d'une autre rame de métro présente à la station suivante" << endl;
 						}
@@ -487,13 +489,13 @@ int main()
 						std::uniform_int_distribution<int> montee_pif{ 0,aquai };
 						int montee = montee_pif(re);
 						cout << "Montee de " << montee << " passagers dans la rame 2." << endl;
-						std::this_thread::sleep_for(montee * 0.25s);
+						
 						metro2.hausse_passager_dedans(montee);
 						aquai -= montee;
 						stat_actu.set_passager(aquai);
 						cout << "Depart de la rame 1 de la station " << stat_nom << endl;
 						//On vérifie s'il n'y a pas déjà une rame de présente sur le parcours
-						while (((metro2.get_prochain_arret() == (metro1.get_prochain_arret() | metro1.get_station())) && metro1.reverse() == metro2.reverse()) || ((metro2.get_prochain_arret() == (metro3.get_prochain_arret() | metro3.get_station())) && metro2.reverse() == metro3.reverse())) {
+						while (((numero_station_suivante2 == (metro1.get_prochain_arret() || metro1.get_station())) /* && metro1.reverse() == metro2.reverse()*/) || ((numero_station_suivante2 == (metro3.get_prochain_arret() || metro3.get_station())) /* && metro2.reverse() == metro3.reverse()*/)) {
 							//On ne fait pas redémarrer le metro tant qu'une rame bloque la voie
 							cout << "Metro 2 bloqué en raison d'une autre rame de métro présente à la station suivante" << endl;
 						}
@@ -505,14 +507,15 @@ int main()
 			}
 		}
 	);
-
+	
 	std::jthread rame3(
-		[&stopped, &re, &liste_station, &size, &metro1, &metro2, &metro3, &posX_voie, &posY_voie1, &posY_voie2, &taille_voie, &pi, &taille_metro, &panne1, &panne2, &panne3]
+		[&stopped, &re, &liste_station, &size, &metro1, &metro2, &metro3, &posX_voie, &posY_voie1, &posY_voie2, &taille_voie, &taille_metro, &panne1, &panne2, &panne3]
 		{
 			cout << "Rame 3 prete" << endl;
 			//On effectue un premier affichage du metro
-			metro3.ChangementPositionMetro(sf::Vector2f(posX_voie[0], posY_voie1));
-			//On indique qu'il est dans la garemetro3.arrivee_station(size);
+			metro3.ChangementPositionMetro(sf::Vector2f(posX_voie[2], posY_voie1 - 30));
+			//On indique qu'il est dans la gare
+			metro3.arrivee_station(size);
 			cout << "Montee de passagers depuis la station 1 pour la rame 1" << endl;
 			//On fait monter des passagers
 			int aquai = liste_station.at(metro1.get_station() - 1).get_passager();
@@ -520,19 +523,19 @@ int main()
 			int montee = montee_pif(re);
 			cout << "Montee de " << montee << " passagers dans la rame 3." << endl;
 			//Le temps d'attente dans une gare est de 3 secondes
-			std::this_thread::sleep_for(3s);
+			std::this_thread::sleep_for(5s);
 			//On organise le premier départ
 			cout << "Depart de la rame 3 de la station 1" << endl;
 			metro3.depart_station(10);
 			//Boucle infinie permettant de réaliser le mouvement du métro
 			while (!stopped) {
 				//On fait une pause dans le thread afin de simuler un déplacement du métro
-				std::this_thread::sleep_for(1s);
+				std::this_thread::sleep_for(0.2s);
 				//On récupère la position du metro, sa vitesse ainsi que la station d'arret suivante
 				int pourcent = metro3.get_position();
 				int vit = metro3.get_vitesse(); 
-				int numero_station_suivante = metro3.get_prochain_arret();
-				cout << "numero de station suivante : " << numero_station_suivante << endl;
+				int numero_station_suivante3 = metro3.get_prochain_arret();
+				
 				//On récupère les pannes des autres metros, si une est active on arrête le métro pour 30 secondes
 				if (panne1) {
 					cout << "Panne de la rame 1, trafic perturbe" << endl;
@@ -556,18 +559,18 @@ int main()
 						panne3 = false;
 					}
 					//S'il n'y a pas de panne, alors on déplace le métro et on l'affiche
-					cout << "Progression de la rame 3 : " << pourcent << " %" << endl; //affichage de sa progression
+					cout << "Progression de la rame 3 : " << pourcent << " %" << "		numero de station suivante : " << numero_station_suivante3 << endl; //affichage de sa progression
 					metro3.set_position(pourcent + vit); //déplacement
 
 					//Affichage du wagon
 					//S'il est dans le sens des gare croissants
 					if (metro3.reverse() == false) { 
-						metro3.ChangementPositionMetro(sf::Vector2f(posX_voie[numero_station_suivante - 2] + pourcent * pow(10, -2) * taille_voie[numero_station_suivante - 2] - (taille_metro[0] * pow(10, -1)) / 2, posY_voie1 - taille_metro[1] * pow(10, -1)));
+						metro3.ChangementPositionMetro(sf::Vector2f(posX_voie[numero_station_suivante3 - 2] + pourcent * pow(10, -2) * taille_voie[numero_station_suivante3 - 2] - (taille_metro[0] * pow(10, -1)) / 2, posY_voie1 - taille_metro[1] * pow(10, -1)));
 
 					}
 					//S'il est dans le sens des gare décroissants
 					else { 
-						metro3.ChangementPositionMetro(sf::Vector2f(posX_voie[numero_station_suivante - 1] + taille_voie[numero_station_suivante - 1] * (1 - pourcent * pow(10, -2)) + (taille_metro[0] * pow(10, -1)) / 2, posY_voie2 + taille_metro[1] * pow(10, -1)));
+						metro3.ChangementPositionMetro(sf::Vector2f(posX_voie[numero_station_suivante3 - 1] + taille_voie[numero_station_suivante3 - 1] * (1 - pourcent * pow(10, -2)) + (taille_metro[0] * pow(10, -1)) / 2, posY_voie2 + taille_metro[1] * pow(10, -1)));
 						metro3.RotationMetro(180);
 					}
 				}
@@ -613,7 +616,7 @@ int main()
 						std::this_thread::sleep_for(3s);
 						cout << "Depart de la rame 3 de la station " << stat_nom << endl;
 						//On vérifie s'il n'y a pas déjà une rame de présente sur le parcours
-						while (((metro3.get_prochain_arret() == (metro1.get_prochain_arret() | metro1.get_station())) && metro1.reverse() == metro3.reverse()) || ((metro3.get_prochain_arret() == (metro2.get_prochain_arret() | metro2.get_station())) && metro2.reverse() == metro3.reverse())) {
+						while (((metro3.get_prochain_arret() == (metro1.get_prochain_arret() || metro1.get_station())) /* && metro1.reverse() == metro3.reverse()*/) || ((metro3.get_prochain_arret() == (metro2.get_prochain_arret() || metro2.get_station())) /* && metro2.reverse() == metro3.reverse()*/)) {
 							//On ne fait pas redémarrer le metro tant qu'une rame bloque la voie
 							cout << "Metro 3 bloqué en raison d'une autre rame de métro présente à la station suivante" << metro3.get_prochain_arret() << metro2.get_prochain_arret() << metro1.get_prochain_arret() << metro2.get_station() << metro1.get_station() << endl;
 						}
@@ -637,13 +640,13 @@ int main()
 						std::uniform_int_distribution<int> montee_pif{ 0,aquai };
 						int montee = montee_pif(re);
 						cout << "Montee de " << montee << " passagers dans la rame 3." << endl;
-						std::this_thread::sleep_for(montee * 0.25s);
+						
 						metro3.hausse_passager_dedans(montee);
 						aquai -= montee;
 						stat_actu.set_passager(aquai);
 						cout << "Depart de la rame 3 de la station " << stat_nom << endl;
 						//On vérifie s'il n'y a pas déjà une rame de présente sur le parcours
-						while (((metro3.get_prochain_arret() == (metro1.get_prochain_arret() | metro1.get_station())) && metro1.reverse() == metro3.reverse()) || ((metro3.get_prochain_arret() == (metro2.get_prochain_arret() | metro2.get_station())) && metro2.reverse() == metro3.reverse())) {
+						while (((metro3.get_prochain_arret() == (metro1.get_prochain_arret() || metro1.get_station())) /* && metro1.reverse() == metro3.reverse()*/) || ((metro3.get_prochain_arret() == (metro2.get_prochain_arret() || metro2.get_station())) /* && metro2.reverse() == metro3.reverse()*/)) {
 							//On ne fait pas redémarrer le metro tant qu'une rame bloque la voie
 							cout << "Metro 3 bloqué en raison d'une autre rame de métro présente à la station suivante" << metro3.get_prochain_arret() << metro2.get_prochain_arret() << metro1.get_prochain_arret() << metro2.get_station() << metro1.get_station() << endl;
 						}
@@ -655,7 +658,7 @@ int main()
 			}
 		}
 	);
-
+	
 
 	sf::RenderWindow window(sf::VideoMode(1600, 900), "Visualisation du métro Lillois");
 
