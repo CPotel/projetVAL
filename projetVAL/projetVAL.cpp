@@ -278,11 +278,11 @@ int main()
 						metro1.ChangementPositionMetro(sf::Vector2f(posX_voie[numero_station_suivante1 - 1] + taille_voie[numero_station_suivante1 - 1] * (1 - pourcent * pow(10, -2)) + (taille_metro[0] * pow(10, -1)) / 2, posY_voie2 + taille_metro[1] * pow(10, -1)));
 						metro1.RotationMetro(180);
 					}
-					if (pourcent < 75 && vit < 5) { //tant qu'on a pas atteint la vitesse de croisière (limitée à une certaine portion du trajet)
-						metro1.acceleration(1); //la rame accélère jusqu'à l'atteindre
+					if (vit < 7) { //tant qu'on a pas atteint la vitesse de croisière 
+						metro1.acceleration(3); //la rame accélère jusqu'à l'atteindre
 					}
-					if(pourcent>80 && vit > 1){ //a l'approche d'une gare
-						metro1.freinage(1); //on fait freiner la rame
+					if(pourcent>75 && vit > 1){ //a l'approche d'une gare
+						metro1.freinage(3); //on fait freiner la rame
 					}
 				}
 
@@ -446,11 +446,11 @@ int main()
 						metro2.ChangementPositionMetro(sf::Vector2f(posX_voie[numero_station_suivante2 - 1] + taille_voie[numero_station_suivante2 - 1] * (1 - pourcent * pow(10, -2)) + (taille_metro[0] * pow(10, -1)) / 2, posY_voie2 + taille_metro[1] * pow(10, -1)));
 						metro2.RotationMetro(180);
 					}
-					if (pourcent < 75 && vit < 5) { //tant qu'on a pas atteint la vitesse de croisière (limitée à une certaine portion du trajet)
-						metro2.acceleration(1); //la rame accélère jusqu'à l'atteindre
+					if (vit < 7) { //tant qu'on a pas atteint la vitesse de croisière
+						metro2.acceleration(3); //la rame accélère jusqu'à l'atteindre
 					}
-					if (pourcent > 80 && vit > 1) { //a l'approche d'une gare
-						metro2.freinage(1); //on fait freiner la rame
+					if (pourcent > 75 && vit > 1) { //a l'approche d'une gare
+						metro2.freinage(3); //on fait freiner la rame
 					}
 				}
 				//Sinon, c'est qu'il est arrivé à un station
@@ -614,11 +614,11 @@ int main()
 						metro3.ChangementPositionMetro(sf::Vector2f(posX_voie[numero_station_suivante3 - 1] + taille_voie[numero_station_suivante3 - 1] * (1 - pourcent * pow(10, -2)) + (taille_metro[0] * pow(10, -1)) / 2, posY_voie2 + taille_metro[1] * pow(10, -1)));
 						metro3.RotationMetro(180);
 					}
-					if (pourcent < 75 && vit < 5) { //tant qu'on a pas atteint la vitesse de croisière (limitée à une certaine portion du trajet)
-						metro3.acceleration(1); //la rame accélère jusqu'à l'atteindre
+					if (vit < 7) { //tant qu'on a pas atteint la vitesse de croisière
+						metro3.acceleration(3); //la rame accélère jusqu'à l'atteindre
 					}
-					if (pourcent > 80 && vit > 1) { //a l'approche d'une gare
-						metro3.freinage(1); //on fait freiner la rame
+					if (pourcent > 75 && vit > 1) { //a l'approche d'une gare
+						metro3.freinage(3); //on fait freiner la rame
 					}
 				}
 				//Sinon, c'est qu'il est arrivé à un station
