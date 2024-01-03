@@ -132,4 +132,5 @@ public:
     void ChangementTailleMetro(const sf::Vector2f& pos);
     void RotationMetro(const int n);
     void AffichageMetro(sf::RenderWindow &Win);
+    
 };

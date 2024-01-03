@@ -140,6 +140,7 @@ void metro::demi_tour() {
 	this->sens = !this->sens;
 }
 
+
 const bool metro::reverse() {
 	return this->sens;
 }
@@ -193,7 +194,7 @@ int main()
 	metro1.ChangementTextureWagon(TextureWagon);
 	metro metro2 = metro(0, 2, 0, 0, 0, 2);
 	metro2.ChangementTextureWagon(TextureWagon);
-	metro metro3 = metro(0, 3, 0, 0, 0, 3);
+	metro metro3 = metro(0, 8, 0, 0, 0, 3);
 	metro3.ChangementTextureWagon(TextureWagon);
 
 	int size = liste_station.size(); //nombre de stations créées
@@ -298,6 +299,7 @@ int main()
 						aquai += passagers;
 						stat_actu.set_passager(aquai);
 						//On effectue le demi tour au metro
+						
 						metro1.demi_tour();
 						cout << "Passage par la voie de demi-tour." << endl;
 						std::this_thread::sleep_for(5s);
@@ -450,6 +452,7 @@ int main()
 						aquai += passagers;
 						stat_actu.set_passager(aquai);
 						//On effectue le demi tour au metro
+						
 						metro2.demi_tour();
 						cout << "Passage par la voie de demi-tour." << endl;
 						std::this_thread::sleep_for(5s);
@@ -603,6 +606,7 @@ int main()
 						aquai += passagers;
 						stat_actu.set_passager(aquai);
 						//On effectue le demi tour au metro
+						
 						metro3.demi_tour();
 						cout << "Passage par la voie de demi-tour." << endl;
 						std::this_thread::sleep_for(5s);
