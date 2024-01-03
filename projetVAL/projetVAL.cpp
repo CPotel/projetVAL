@@ -216,14 +216,14 @@ int main()
 			//On fait monter des passagers
 			cout << "Montee de passagers depuis la station 1 pour la rame 1" << endl;
 			int aquai = liste_station.at(metro1.get_station() - 1).get_passager();
-			std::uniform_int_distribution<int> montee_pif{ 0,aquai }; //montée d'un nombre aléatoire de passagers dans la rame depuis le quai (au moins 1)
+			std::uniform_int_distribution<int> montee_pif{ 0,aquai }; //montée d'un nombre aléatoire de passagers dans la rame depuis le quai
 			int montee = montee_pif(re);
 			cout << "Montee de " << montee << " passagers dans la rame 1." << endl;
 			//Le temps d'attente dans une gare est de 3 secondes
 			std::this_thread::sleep_for(5s);
 			//On organise le premier départ
 			cout << "Depart de la rame 1 de la station 1" << endl;
-			metro1.depart_station(10);
+			metro1.depart_station(1);
 			//Boucle infinie permettant de réaliser le mouvement du métro
 			while (!stopped) { 
 				//On fait une pause dans le thread afin de simuler un déplacement du métro
@@ -267,6 +267,12 @@ int main()
 					else { 
 						metro1.ChangementPositionMetro(sf::Vector2f(posX_voie[numero_station_suivante1 - 1] + taille_voie[numero_station_suivante1 - 1] * (1 - pourcent * pow(10, -2)) + (taille_metro[0] * pow(10, -1)) / 2, posY_voie2 + taille_metro[1] * pow(10, -1)));
 						metro1.RotationMetro(180);
+					}
+					if (pourcent < 75 && vit < 5) { //tant qu'on a pas atteint la vitesse de croisière (limitée à une certaine portion du trajet)
+						metro1.acceleration(1); //la rame accélère jusqu'à l'atteindre
+					}
+					if(pourcent>80 && vit > 1){ //a l'approche d'une gare
+						metro1.freinage(1); //on fait freiner la rame
 					}
 				}
 
@@ -368,14 +374,14 @@ int main()
 			//On fait monter des passagers
 			cout << "Montee de passagers depuis la station 1 pour la rame 2" << endl;
 			int aquai = liste_station.at(metro2.get_station() - 1).get_passager();
-			std::uniform_int_distribution<int> montee_pif{ 0,aquai }; //montée d'un nombre aléatoire de passagers dans la rame depuis le quai (au moins 1)
+			std::uniform_int_distribution<int> montee_pif{ 0,aquai }; //montée d'un nombre aléatoire de passagers dans la rame depuis le quai
 			int montee = montee_pif(re);
 			cout << "Montee de " << montee << " passagers dans la rame 2." << endl;
 			//Le temps d'attente dans une gare est de 3 secondes
 			std::this_thread::sleep_for(5s);
 			//On organise le premier départ
 			cout << "Depart de la rame 2 de la station 2" << endl;
-			metro2.depart_station(10);
+			metro2.depart_station(1);
 			//Boucle infinie permettant de réaliser le mouvement du métro
 			while (!stopped) {
 				//On fait une pause dans le thread afin de simuler un déplacement du métro
@@ -421,6 +427,12 @@ int main()
 					else { 
 						metro2.ChangementPositionMetro(sf::Vector2f(posX_voie[numero_station_suivante2 - 1] + taille_voie[numero_station_suivante2 - 1] * (1 - pourcent * pow(10, -2)) + (taille_metro[0] * pow(10, -1)) / 2, posY_voie2 + taille_metro[1] * pow(10, -1)));
 						metro2.RotationMetro(180);
+					}
+					if (pourcent < 75 && vit < 5) { //tant qu'on a pas atteint la vitesse de croisière (limitée à une certaine portion du trajet)
+						metro2.acceleration(1); //la rame accélère jusqu'à l'atteindre
+					}
+					if (pourcent > 80 && vit > 1) { //a l'approche d'une gare
+						metro2.freinage(1); //on fait freiner la rame
 					}
 				}
 				//Sinon, c'est qu'il est arrivé à un station
@@ -521,14 +533,14 @@ int main()
 			cout << "Montee de passagers depuis la station 1 pour la rame 1" << endl;
 			//On fait monter des passagers
 			int aquai = liste_station.at(metro1.get_station() - 1).get_passager();
-			std::uniform_int_distribution<int> montee_pif{ 0,aquai }; //montée d'un nombre aléatoire de passagers dans la rame depuis le quai (au moins 1)
+			std::uniform_int_distribution<int> montee_pif{ 0,aquai }; //montée d'un nombre aléatoire de passagers dans la rame depuis le quai
 			int montee = montee_pif(re);
 			cout << "Montee de " << montee << " passagers dans la rame 3." << endl;
 			//Le temps d'attente dans une gare est de 3 secondes
 			std::this_thread::sleep_for(5s);
 			//On organise le premier départ
 			cout << "Depart de la rame 3 de la station 1" << endl;
-			metro3.depart_station(10);
+			metro3.depart_station(1);
 			//Boucle infinie permettant de réaliser le mouvement du métro
 			while (!stopped) {
 				//On fait une pause dans le thread afin de simuler un déplacement du métro
@@ -574,6 +586,12 @@ int main()
 					else { 
 						metro3.ChangementPositionMetro(sf::Vector2f(posX_voie[numero_station_suivante3 - 1] + taille_voie[numero_station_suivante3 - 1] * (1 - pourcent * pow(10, -2)) + (taille_metro[0] * pow(10, -1)) / 2, posY_voie2 + taille_metro[1] * pow(10, -1)));
 						metro3.RotationMetro(180);
+					}
+					if (pourcent < 75 && vit < 5) { //tant qu'on a pas atteint la vitesse de croisière (limitée à une certaine portion du trajet)
+						metro3.acceleration(1); //la rame accélère jusqu'à l'atteindre
+					}
+					if (pourcent > 80 && vit > 1) { //a l'approche d'une gare
+						metro3.freinage(1); //on fait freiner la rame
 					}
 				}
 				//Sinon, c'est qu'il est arrivé à un station
