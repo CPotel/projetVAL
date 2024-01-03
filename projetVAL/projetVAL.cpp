@@ -140,6 +140,15 @@ void metro::demi_tour() {
 	this->sens = !this->sens;
 }
 
+void metro::affichage_demi_tour(int i) {
+	if (this->sens) {
+		this->ChangementPositionMetro(sf::Vector2f(100 - 10 * i, 250));
+	}
+	else {
+		this->ChangementPositionMetro(sf::Vector2f(1390 + 50 + 10 * i, 200));
+	}
+
+}
 
 const bool metro::reverse() {
 	return this->sens;
@@ -194,7 +203,7 @@ int main()
 	metro1.ChangementTextureWagon(TextureWagon);
 	metro metro2 = metro(0, 2, 0, 0, 0, 2);
 	metro2.ChangementTextureWagon(TextureWagon);
-	metro metro3 = metro(0, 8, 0, 0, 0, 3);
+	metro metro3 = metro(0, 3, 0, 0, 0, 3);
 	metro3.ChangementTextureWagon(TextureWagon);
 
 	int size = liste_station.size(); //nombre de stations créées
@@ -305,10 +314,17 @@ int main()
 						aquai += passagers;
 						stat_actu.set_passager(aquai);
 						//On effectue le demi tour au metro
-						
+						for (int i = 1; i < 6; i++) {
+							metro1.affichage_demi_tour(i);
+							std::this_thread::sleep_for(0.2s);
+						}
+						for (int i = 5; i > 0; i--) {
+							cout << "Test	" << i << endl;
+							metro1.affichage_demi_tour(i);
+							std::this_thread::sleep_for(0.2s);
+						}
 						metro1.demi_tour();
 						cout << "Passage par la voie de demi-tour." << endl;
-						std::this_thread::sleep_for(5s);
 						cout << "Demi-tour effectue." << endl;
 						//On fait monter un nombre aléatoire de passagers
 						std::uniform_int_distribution<int> montee_terminus{ 0, aquai };
@@ -464,10 +480,18 @@ int main()
 						aquai += passagers;
 						stat_actu.set_passager(aquai);
 						//On effectue le demi tour au metro
-						
+						for (int i = 1; i < 6; i++) {
+							metro2.affichage_demi_tour(i);
+							std::this_thread::sleep_for(0.2s);
+						}
+						for (int i = 5; i > 0; i--) {
+							cout << "Test	" << i << endl;
+							metro2.affichage_demi_tour(i);
+							std::this_thread::sleep_for(0.2s);
+						}
 						metro2.demi_tour();
 						cout << "Passage par la voie de demi-tour." << endl;
-						std::this_thread::sleep_for(5s);
+						
 						cout << "Demi-tour effectue." << endl;
 						//On fait monter un nombre aléatoire de passagers
 						std::uniform_int_distribution<int> montee_terminus{ 0, aquai };
@@ -624,10 +648,18 @@ int main()
 						aquai += passagers;
 						stat_actu.set_passager(aquai);
 						//On effectue le demi tour au metro
-						
+						for (int i = 1; i < 6; i++) {
+							metro3.affichage_demi_tour(i);
+							std::this_thread::sleep_for(0.2s);
+						}
+						for (int i = 5; i > 0; i--) {
+							cout << "Test	" << i << endl;
+							metro3.affichage_demi_tour(i);
+							std::this_thread::sleep_for(0.2s);
+						}
 						metro3.demi_tour();
 						cout << "Passage par la voie de demi-tour." << endl;
-						std::this_thread::sleep_for(5s);
+					
 						cout << "Demi-tour effectue." << endl;
 						//On fait monter un nombre aléatoire de passager
 						std::uniform_int_distribution<int> montee_terminus{ 0, aquai };//montée de passagers
