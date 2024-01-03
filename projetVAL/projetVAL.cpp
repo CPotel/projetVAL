@@ -203,7 +203,7 @@ int main()
 	bool panne2 = false;
 	bool panne3 = false;
 
-	cout << metro1.get_prochain_arret() << "	" << metro2.get_prochain_arret() << "	" << metro3.get_prochain_arret();
+	
 	
 	std::jthread rame1(
 		[&stopped, &re, &liste_station, &size, &metro1, &metro2, &metro3, &posX_voie, &posY_voie1, &posY_voie2, &taille_voie, &taille_metro, &panne1, &panne2, &panne3]
@@ -313,9 +313,9 @@ int main()
 						std::this_thread::sleep_for(3s);
 						cout << "Depart de la rame 1 de la station " << station_atteinte << endl;
 						//On vérifie s'il n'y a pas déjà une rame de présente sur le parcours
-						while (((metro1.get_prochain_arret() == (metro2.get_prochain_arret() || metro2.get_station())) /* && metro1.reverse() == metro2.reverse()*/) || ((metro1.get_prochain_arret() == (metro3.get_prochain_arret() || metro3.get_station()))/* && metro1.reverse() == metro2.reverse()*/)) {
+						while (((metro1.get_prochain_arret() == metro2.get_prochain_arret() || metro1.get_prochain_arret() == metro2.get_station()) && metro1.reverse() == metro2.reverse()) || ((metro1.get_prochain_arret() == metro3.get_prochain_arret() || metro1.get_prochain_arret() == metro3.get_station()) && metro1.reverse() == metro2.reverse())) {
 							//On ne fait pas redémarrer le metro tant qu'une rame bloque la voie
-							cout << "Metro 1 bloqué en raison d'une autre rame de métro présente à la station suivante" << endl;
+							//out << "Metro 1 bloqué en raison d'une autre rame de métro présente à la station suivante" << endl;
 						}
 						//On fait redémarrer le metro (qui sera en sens inverse)
 						metro1.depart_station(vit);
@@ -343,7 +343,7 @@ int main()
 
 						cout << "Depart de la rame 1 de la station " << station_atteinte << endl;
 						//On vérifie s'il n'y a pas déjà une rame de présente sur le parcours
-						while (((metro1.get_prochain_arret() == (metro2.get_prochain_arret() || metro2.get_station()))/* && metro1.reverse() == metro2.reverse()*/) || ((metro1.get_prochain_arret() == (metro3.get_prochain_arret() || metro3.get_station())) /* && metro1.reverse() == metro2.reverse()*/)) {
+						while (((metro1.get_prochain_arret() == metro2.get_prochain_arret() || metro1.get_prochain_arret() == metro2.get_station()) && metro1.reverse() == metro2.reverse()) || ((metro1.get_prochain_arret() == metro3.get_prochain_arret() || metro1.get_prochain_arret() == metro3.get_station()) && metro1.reverse() == metro2.reverse())) {
 							//On ne fait pas redémarrer le metro tant qu'une rame bloque la voie
 							cout << "Metro 1 bloqué en raison d'une autre rame de métro présente à la station suivante" << endl;
 						}
@@ -465,7 +465,8 @@ int main()
 						std::this_thread::sleep_for(3s);
 						cout << "Depart de la rame 2 de la station " << stat_nom << endl;
 						//On vérifie s'il n'y a pas déjà une rame de présente sur le parcours
-						while (((metro2.get_prochain_arret() == (metro1.get_prochain_arret() || metro1.get_station())) /* && metro1.reverse() == metro2.reverse()*/) || ((metro2.get_prochain_arret() == (metro3.get_prochain_arret() || metro3.get_station())) /* && metro2.reverse() == metro3.reverse()*/)) {
+						cout << metro2.get_prochain_arret() << "	" << metro1.get_prochain_arret()<< "	" << metro1.get_station() << "	" << metro3.get_prochain_arret() << "		" << metro3.get_station() << endl;
+						while (((metro2.get_prochain_arret() == metro1.get_prochain_arret() || metro2.get_prochain_arret() == metro1.get_station())  && metro1.reverse() == metro2.reverse()) || ((metro2.get_prochain_arret() == metro3.get_prochain_arret() || metro2.get_prochain_arret() == metro3.get_station())  && metro2.reverse() == metro3.reverse())) {
 							//On ne fait pas redémarrer le metro tant qu'une rame bloque la voie
 							cout << "Metro 2 bloqué en raison d'une autre rame de métro présente à la station suivante" << endl;
 						}
@@ -495,7 +496,8 @@ int main()
 						stat_actu.set_passager(aquai);
 						cout << "Depart de la rame 1 de la station " << stat_nom << endl;
 						//On vérifie s'il n'y a pas déjà une rame de présente sur le parcours
-						while (((numero_station_suivante2 == (metro1.get_prochain_arret() || metro1.get_station())) /* && metro1.reverse() == metro2.reverse()*/) || ((numero_station_suivante2 == (metro3.get_prochain_arret() || metro3.get_station())) /* && metro2.reverse() == metro3.reverse()*/)) {
+						cout << metro2.get_prochain_arret() << "	" << metro1.get_prochain_arret() << "	" << metro1.get_station() << "	" << metro3.get_prochain_arret() << "		" << metro3.get_station() << endl;
+						while (((metro2.get_prochain_arret() == metro1.get_prochain_arret() || metro2.get_prochain_arret() == metro1.get_station()) && metro1.reverse() == metro2.reverse()) || ((metro2.get_prochain_arret() == metro3.get_prochain_arret() || metro2.get_prochain_arret() == metro3.get_station()) && metro2.reverse() == metro3.reverse())) {
 							//On ne fait pas redémarrer le metro tant qu'une rame bloque la voie
 							cout << "Metro 2 bloqué en raison d'une autre rame de métro présente à la station suivante" << endl;
 						}
@@ -616,7 +618,7 @@ int main()
 						std::this_thread::sleep_for(3s);
 						cout << "Depart de la rame 3 de la station " << stat_nom << endl;
 						//On vérifie s'il n'y a pas déjà une rame de présente sur le parcours
-						while (((metro3.get_prochain_arret() == (metro1.get_prochain_arret() || metro1.get_station())) /* && metro1.reverse() == metro3.reverse()*/) || ((metro3.get_prochain_arret() == (metro2.get_prochain_arret() || metro2.get_station())) /* && metro2.reverse() == metro3.reverse()*/)) {
+						while (((metro3.get_prochain_arret() == metro1.get_prochain_arret() || metro3.get_prochain_arret() == metro1.get_station()) && metro1.reverse() == metro3.reverse()) || ((metro3.get_prochain_arret() == metro2.get_prochain_arret() || metro3.get_prochain_arret() == metro2.get_station()) && metro2.reverse() == metro3.reverse())){							
 							//On ne fait pas redémarrer le metro tant qu'une rame bloque la voie
 							cout << "Metro 3 bloqué en raison d'une autre rame de métro présente à la station suivante" << metro3.get_prochain_arret() << metro2.get_prochain_arret() << metro1.get_prochain_arret() << metro2.get_station() << metro1.get_station() << endl;
 						}
@@ -646,7 +648,7 @@ int main()
 						stat_actu.set_passager(aquai);
 						cout << "Depart de la rame 3 de la station " << stat_nom << endl;
 						//On vérifie s'il n'y a pas déjà une rame de présente sur le parcours
-						while (((metro3.get_prochain_arret() == (metro1.get_prochain_arret() || metro1.get_station())) /* && metro1.reverse() == metro3.reverse()*/) || ((metro3.get_prochain_arret() == (metro2.get_prochain_arret() || metro2.get_station())) /* && metro2.reverse() == metro3.reverse()*/)) {
+						while (((metro3.get_prochain_arret() == metro1.get_prochain_arret() || metro3.get_prochain_arret() == metro1.get_station()) && metro1.reverse() == metro3.reverse()) || ((metro3.get_prochain_arret() == metro2.get_prochain_arret() || metro3.get_prochain_arret() == metro2.get_station())  && metro2.reverse() == metro3.reverse())) {
 							//On ne fait pas redémarrer le metro tant qu'une rame bloque la voie
 							cout << "Metro 3 bloqué en raison d'une autre rame de métro présente à la station suivante" << metro3.get_prochain_arret() << metro2.get_prochain_arret() << metro1.get_prochain_arret() << metro2.get_station() << metro1.get_station() << endl;
 						}
