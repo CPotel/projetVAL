@@ -245,7 +245,7 @@ int main()
 				if (pourcent < 100) {
 					//On utilise une variable aléatoire permettant de créer une panne
 					//Si une panne est crée, on va stopper tous les métros pendant 30 secondes
-					std::uniform_int_distribution<int> chance_panne{ 0,999 };
+					std::uniform_int_distribution<int> chance_panne{ 0,1999 };
 					int panne_pot = chance_panne(re);
 					if (panne_pot == 449) {
 						panne1 = true;
@@ -405,7 +405,7 @@ int main()
 				if (pourcent < 100) { 
 					//On utilise une variable aléatoire permettant de créer une panne
 					//Si une panne est crée, on va stopper tous les métros pendant 30 secondes
-					std::uniform_int_distribution<int> chance_panne{ 0,999 };
+					std::uniform_int_distribution<int> chance_panne{ 0,1999 };
 					int panne_pot = chance_panne(re);
 					if (panne_pot == 16) {
 						panne2 = true;
@@ -563,9 +563,9 @@ int main()
 				if (pourcent < 100) { 
 					//On utilise une variable aléatoire permettant de créer une panne
 					//Si une panne est crée, on va stopper tous les métros pendant 30 secondes
-					std::uniform_int_distribution<int> chance_panne{ 0,999 };
+					std::uniform_int_distribution<int> chance_panne{ 0,1999 };
 					int panne_pot = chance_panne(re);
-					if (panne_pot == 792) {
+					if (panne_pot == 1792) {
 						panne3 = true;
 						cout << "La rame 3 vient de tomber en panne ! Le probleme est en train d'etre traite" << endl;
 						std::this_thread::sleep_for(30s);
