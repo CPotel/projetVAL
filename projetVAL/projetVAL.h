@@ -19,7 +19,7 @@ private:
     int nb_passager; //nombres de passagers sur le quai
     int numero_station; //std::string nom_station;
     bool train_present; //si un train est a quai
-    sf::Sprite Gare;
+    sf::Sprite Gare; //image de la gare pour l'affichage
     sf::RectangleShape voie1, voie2; //La voie 1 vas en station croissante (1,2,3,etc) et la voie 2 en station décroissante (9,8,7,etc)
 
 public:
@@ -84,15 +84,14 @@ public:
 
 class metro {
 private:
-    int nb_passager_dedans;
-    int prochain_arret; //Numero de la prochaine
-    //Si on a le temps : problème technique
-    int vitesse;
-    int position; //pourcentage entre l'ancienne station et la suivante
+    int nb_passager_dedans; //nombre de passagers à bord
+    int prochain_arret; //Numero de la prochaine station
+    int vitesse; //vitesse actuelle
+    int position; //pourcentage entre l'ancienne station et la suivante (entre 0 et 100)
     int station; //0 si pas dans une station, num station si dans une station
-    int numero_train;
+    int numero_train; //identifiant du train
     bool sens; // si true, traverse les stations en sens inverse
-    sf::Sprite wagon;
+    sf::Sprite wagon; //image de la rame pour l'affichage
 
 public:
 
@@ -127,10 +126,10 @@ public:
     void arrivee_station(int taille_ligne); //Change la variable station et prochain_arret
     void depart_station(int vit_depart); //quitte la station
     void demi_tour(); //changement de sens
-    void ChangementTextureWagon(const sf::Texture& Text);
-    void ChangementPositionMetro(const sf::Vector2f& pos);
-    void ChangementTailleMetro(const sf::Vector2f& pos);
-    void RotationMetro(const int n);
-    void AffichageMetro(sf::RenderWindow &Win);
-    void affichage_demi_tour(int i);
+    void ChangementTextureWagon(const sf::Texture& Text); //changement de l'image
+    void ChangementPositionMetro(const sf::Vector2f& pos); //déplacement de l'image
+    void ChangementTailleMetro(const sf::Vector2f& pos); //modification de la taille de l'image
+    void RotationMetro(const int n); //rotation d'un certain angle
+    void AffichageMetro(sf::RenderWindow &Win); //affichage de la rame
+    void affichage_demi_tour(int i); //cas spécial du demi-tour
 };
