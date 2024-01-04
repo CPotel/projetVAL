@@ -233,7 +233,7 @@ int main()
 			int montee = montee_pif(re);
 			cout << "Montee de " << montee << " passagers dans la rame 1." << endl;
 			//Le temps d'attente dans une gare est de 3 secondes
-			std::this_thread::sleep_for(5s);
+			std::this_thread::sleep_for(3s);
 			//On organise le premier départ
 			cout << "Depart de la rame 1 de la station 1" << endl;
 			metro1.depart_station(1);
@@ -404,7 +404,7 @@ int main()
 			int montee = montee_pif(re);
 			cout << string(Col2, Tab) << "Montee de " << montee << " passagers dans la rame 2." << endl;
 			//Le temps d'attente dans une gare est de 3 secondes
-			std::this_thread::sleep_for(5s);
+			std::this_thread::sleep_for(3s);
 			//On organise le premier départ
 			cout << string(Col2, Tab) << "Depart de la rame 2 de la station 2" << endl;
 			metro2.depart_station(1);
@@ -576,7 +576,7 @@ int main()
 			int montee = montee_pif(re);
 			cout << string(Col3, Tab) << "Montee de " << montee << " passagers dans la rame 3." << endl;
 			//Le temps d'attente dans une gare est de 3 secondes
-			std::this_thread::sleep_for(5s);
+			std::this_thread::sleep_for(3s);
 			//On organise le premier départ
 			cout << string(Col3, Tab) << "Depart de la rame 3 de la station 1" << endl;
 			metro3.depart_station(1);
