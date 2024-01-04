@@ -196,6 +196,14 @@ int main()
 	bool panne2 = false;
 	bool panne3 = false;
 
+	//Initialisation des textures de l'affichage des pannes
+	sf::Texture TexturePanne1, TexturePanne2, TexturePanne3;
+	if (!TexturePanne1.loadFromFile(std::string("C:/Program Files/SFML/img/Panne1.png")) || !TexturePanne2.loadFromFile(std::string("C:/Program Files/SFML/img/Panne2.png")) || !TexturePanne3.loadFromFile(std::string("C:/Program Files/SFML/img/Panne3.png")))
+	{
+		cerr << "Erreur pendant le chargement des images" << endl;
+
+	}
+
 	//Initialisation des textures de gare et de métro
 	sf::Texture TextureGare, TextureWagon;
 	if (!TextureGare.loadFromFile(std::string("C:/Program Files/SFML/img/gare.png")) || !TextureWagon.loadFromFile(std::string("C:/Program Files/SFML/img/RameMetro2.png")))
@@ -204,12 +212,15 @@ int main()
 
 	}
 	
+	//Initialisation des sprites d'indicateurs de pannes
+	sf::Sprite ImgPanne1, ImgPanne2, ImgPanne3;
+
 	//Initialisation des voies de demi tour
 	sf::RectangleShape demi_tour1, demi_tour2;
 
 	//Initialisation et lancement du thread de la rame 1
 	std::jthread rame1(
-		[&stopped, &re, &liste_station, &size, &metro1, &metro2, &metro3, &posX_voie, &posY_voie1, &posY_voie2, &taille_voie, &taille_metro, &panne1, &panne2, &panne3]
+		[&stopped, &re, &liste_station, &size, &metro1, &metro2, &metro3, &posX_voie, &posY_voie1, &posY_voie2, &taille_voie, &taille_metro, &panne1, &panne2, &panne3,&ImgPanne1]
 		{
 			cout << "Rame 1 prete" << endl;
 			//On effectue un premier affichage du metro
@@ -252,8 +263,12 @@ int main()
 					if (panne_pot == 449) {
 						panne1 = true;
 						cout << "Panne de la rame 1 !" << endl;
+						//Affichage de l'indicateur Panne 1
+						ImgPanne1.setColor(sf::Color(255, 255, 255, 255));
 						std::this_thread::sleep_for(30s);
 						cout << "La rame 1 est de nouveau operationnelle ! " << endl;
+						//On enleve l'indicateur Panne 1
+						ImgPanne1.setColor(sf::Color(255, 255, 255, 0));
 						panne1 = false;
 					}
 					//S'il n'y a pas de panne, alors on déplace le métro et on l'affiche
@@ -376,7 +391,7 @@ int main()
 	
 	//Initialisation et lancement du thread de la rame 2
 	std::jthread rame2(
-		[&stopped, &re, &liste_station, &size, &metro1, &metro2, &metro3, &posX_voie, &posY_voie1, &posY_voie2, &taille_voie, &taille_metro, &panne1, &panne2, &panne3, &Col2, &Tab]
+		[&stopped, &re, &liste_station, &size, &metro1, &metro2, &metro3, &posX_voie, &posY_voie1, &posY_voie2, &taille_voie, &taille_metro, &panne1, &panne2, &panne3, &Col2, &Tab, &ImgPanne2]
 		{
 			cout << string(Col2, Tab) << "Rame 2 prete" << endl;
 			//On effectue un premier affichage du metro
@@ -421,8 +436,12 @@ int main()
 					if (panne_pot == 16) {
 						panne2 = true;
 						cout << string(Col2, Tab) << "Panne de la rame 2 !" << endl;
+						//Affichage de l'indicateur Panne 2
+						ImgPanne2.setColor(sf::Color(255, 255, 255, 255));
 						std::this_thread::sleep_for(30s);
 						cout << string(Col2, Tab) << "La rame 2 est de nouveau operationnelle" << endl;
+						//On cache l'indicateur Panne 2
+						ImgPanne2.setColor(sf::Color(255, 255, 255, 0));
 						panne2 = false;
 					}
 					//S'il n'y a pas de panne, alors on déplace le métro et on l'affiche
@@ -544,7 +563,7 @@ int main()
 	
 	//Initialisation et lancement du thread de la rame 3
 	std::jthread rame3(
-		[&stopped, &re, &liste_station, &size, &metro1, &metro2, &metro3, &posX_voie, &posY_voie1, &posY_voie2, &taille_voie, &taille_metro, &panne1, &panne2, &panne3, &Col3, &Tab]
+		[&stopped, &re, &liste_station, &size, &metro1, &metro2, &metro3, &posX_voie, &posY_voie1, &posY_voie2, &taille_voie, &taille_metro, &panne1, &panne2, &panne3, &Col3, &Tab, &ImgPanne3]
 		{
 			cout << string(Col3, Tab) << "Rame 3 prete" << endl;
 			//On effectue un premier affichage du metro
@@ -585,11 +604,15 @@ int main()
 					//Si une panne est crée, on va stopper tous les métros pendant 30 secondes
 					std::uniform_int_distribution<int> chance_panne{ 0,1000 };
 					int panne_pot = chance_panne(re);
-					if (panne_pot == 1792) {
+					if (panne_pot == 792) {
 						panne3 = true;
 						cout << string(Col3, Tab) << "Panne de la rame 3 !" << endl;
+						//Affichage de l'indicateur Panne 3
+						ImgPanne3.setColor(sf::Color(255, 255, 255, 255));
 						std::this_thread::sleep_for(30s);
 						cout << string(Col3, Tab) << "La rame 3 est de nouveau operationnelle ! " << endl;
+						//On cache l'indicateur Panne 3
+						ImgPanne3.setColor(sf::Color(255, 255, 255, 0));
 						panne3 = false;
 					}
 					//S'il n'y a pas de panne, alors on déplace le métro et on l'affiche
@@ -712,7 +735,7 @@ int main()
 	//Partie affichage Sur une Console :
 
 	//création d'une nouvelle console d'affichage
-	sf::RenderWindow window(sf::VideoMode(1600, 900), "Visualisation du métro Lillois");
+	sf::RenderWindow window(sf::VideoMode(1600, 500), "Visualisation du métro Lillois");
 
 	//Modification de la texture des rames de métro
 	metro1.ChangementTextureWagon(TextureWagon);
@@ -751,6 +774,21 @@ int main()
 	demi_tour1.setFillColor(sf::Color(0, 0, 0));
 	demi_tour2.setFillColor(sf::Color(0, 0, 0));
 
+
+	//Initialisation de la position des indicateurs de panne
+	ImgPanne1.setTexture(TexturePanne1);
+	ImgPanne2.setTexture(TexturePanne2);
+	ImgPanne3.setTexture(TexturePanne3);
+	ImgPanne1.setPosition(sf::Vector2f(600, 350));
+	ImgPanne2.setPosition(sf::Vector2f(750, 350));
+	ImgPanne3.setPosition(sf::Vector2f(900, 350));
+	ImgPanne1.setScale(sf::Vector2f(0.2, 0.2));
+	ImgPanne2.setScale(sf::Vector2f(0.2, 0.2));
+	ImgPanne3.setScale(sf::Vector2f(0.2, 0.2));
+	ImgPanne1.setColor(sf::Color(255, 255, 255, 0));
+	ImgPanne2.setColor(sf::Color(255, 255, 255, 0));
+	ImgPanne3.setColor(sf::Color(255, 255, 255, 0));
+
 	//Affichage  sur la console
 	while (window.isOpen())
 	{
@@ -775,6 +813,11 @@ int main()
 		metro1.AffichageMetro(window);
 		metro2.AffichageMetro(window);
 		metro3.AffichageMetro(window);
+
+		//Affichage des indicateurs de pannes
+		window.draw(ImgPanne1);
+		window.draw(ImgPanne2);
+		window.draw(ImgPanne3);
 
 		//Affichage des voies de demi tour
 		window.draw(demi_tour1);
