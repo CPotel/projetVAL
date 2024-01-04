@@ -1,5 +1,4 @@
 ﻿// projetVAL.cpp : définit le point d'entrée de l'application.
-//
 
 #include "projetVAL.h"
 using namespace std;
@@ -16,56 +15,47 @@ const bool station::is_a_train() {
 	return this->train_present;
 }
 
-//Initialisation de la fonction depart train
+//Initialisation des setters de la classe station
 void station::depart_train() {
 	train_present = false;
 }
-
 void station::set_passager(int n) {
 	this->nb_passager = n;
 }
-
 void station::arrivage_train() {
 	if (!this->is_a_train()) {
 		this->train_present = true;
 	}
 }
-
 void station::baisse_passager(int n) {
 	this->nb_passager -= n;
 }
 
+//Initialisation de méthodes pour l'affichages des gares
 void station::ChangementTextureGare(const sf::Texture& Text) {
 	this->Gare.setTexture(Text);
 }
-
 void station::AffichageGare(sf::RenderWindow& Win) {
 	Win.draw(this->Gare);
 }
-
 void station::ChangementTailleGare(const sf::Vector2f& taille) {
 	this->Gare.setScale(taille);
 }
-
 void station::ChangementPositionGare(const sf::Vector2f& position) {
 	this->Gare.setPosition(position);
 }
 
-//Changement Taille Voie
+//Initialisation de méthodes pour l'affichages des voies
 void station::ChangementTailleVoie1(const sf::Vector2f taille) {
 	this->voie1.setSize(taille);
 }
 void station::ChangementTailleVoie2(const sf::Vector2f taille) {
 	this->voie2.setSize(taille);
 }
-
-//RotationVoie
 void station::RotationVoie(const int n) {
 	this->voie1.rotate(n);
 	this->voie2.rotate(n);
 }
-
-//Changement Position Voie
 void station::ChangementPositionVoie1(const sf::Vector2f& pos) {
 	this->voie1.setPosition(pos);
 }
@@ -79,31 +69,29 @@ void station::AffichageVoies(sf::RenderWindow& Win) {
 }
 
 
-//Fonction du metro
+//Initialisation des getters de la classe metro
 const int metro::get_passager_dedans() {
 	return this->nb_passager_dedans;
 }
-
 const int metro::get_position() {
 	return this->position;
 }
-
 const int metro::get_station() {
 	return this->station;
 }
-
 const int metro::get_vitesse() {
 	return this->vitesse;
 }
-
 const int metro::get_prochain_arret() {
 	return this->prochain_arret;
 }
 const int metro::get_numero_train() {
 	return this->numero_train;
 }
-//Setters de la classe metro
-
+const bool metro::reverse() {
+	return this->sens;
+}
+//Initialisation des setters de la classe metro
 void metro::acceleration(int n) {
 	this->vitesse += n;
 }
@@ -135,11 +123,12 @@ void metro::depart_station(int vit_depart) {
 	this->station = 0; //0 équivaut à être en dehors d'une station;
 	acceleration(vit_depart);
 }
-
 void metro::demi_tour() {
 	this->sens = !this->sens;
 }
 
+
+//Initialisation de méthodes pour l'affichages des metros
 void metro::affichage_demi_tour(int i) {
 	if (this->sens) {
 		this->ChangementPositionMetro(sf::Vector2f(100 - 10 * i, 250));
@@ -149,22 +138,13 @@ void metro::affichage_demi_tour(int i) {
 	}
 
 }
-
-const bool metro::reverse() {
-	return this->sens;
-}
-
-//Changement Texture Wagon
 void metro::ChangementTextureWagon(const sf::Texture& Text) {
 	this->wagon.setTexture(Text);
 }
 
-//changement Position Metro
 void metro::ChangementPositionMetro(const sf::Vector2f& pos) {
 	this->wagon.setPosition(pos);
 }
-
-//Affichage Metro
 void metro::AffichageMetro(sf::RenderWindow& Win) {
 	Win.draw(this->wagon);
 }
@@ -174,12 +154,16 @@ void metro::ChangementTailleMetro(const sf::Vector2f& pos) {
 void metro::RotationMetro(const int n) {
 	this->wagon.setRotation(n);
 }
+
+
+
 int main()
 {
 	//Initialisation du caractère tabulation ainsi que du nombre de répétition afin de créer 3 colonnes dans la console
 	char Tab = '\t';
 	int Col2 = 7;
 	int Col3 = 14;
+
 	//Définition des tailles et positions des voies
 	const int posX_voie[8] = { 130,280,480,580,780,930,1105,1280 };
 	const int posY_voie1 = 200;
@@ -189,36 +173,41 @@ int main()
 	const int PosXGare[9] = { 100,250,450,550,750,900,1075,1250,1390 };
 	const int PosYGare = 200;
 
-	std::default_random_engine re(time(0)); //seed aléatoire pour la montée et descente des passagers
-	//Initialisation liste de stations
-	//Instalation de stations de métro dans notre système
+	//seed aléatoire pour la montée et descente des passagers
+	std::default_random_engine re(time(0)); 
+
+	//Initialisation liste de stations et instalation de stations de métro dans notre système
 	vector<station> liste_station;
 	for (int i = 1; i < 10; i++) {
 		liste_station.push_back(station(i, 10));
 	}
-	//Initialisation des textures de Gare et de Wagon
+
+	//nombre de stations créées
+	int size = liste_station.size();
+
+	//Initialisation des rames de métro (3 rames)
+	metro metro1 = metro(0, 1, 0, 0, 0, 1);
+	metro metro2 = metro(0, 2, 0, 0, 0, 2);
+	metro metro3 = metro(0, 3, 0, 0, 0, 3);
+
+	//Initialisation de booleens  pour créer les pannes
+	bool stopped = false;
+	bool panne1 = false;
+	bool panne2 = false;
+	bool panne3 = false;
+
+	//Initialisation des textures de gare et de métro
 	sf::Texture TextureGare, TextureWagon;
 	if (!TextureGare.loadFromFile(std::string("C:/Program Files/SFML/img/gare.png")) || !TextureWagon.loadFromFile(std::string("C:/Program Files/SFML/img/RameMetro2.png")))
 	{
 		cerr << "Erreur pendant le chargement des images" << endl;
 
 	}
-	metro metro1 = metro(0, 1, 0, 0, 0, 1);
-	metro1.ChangementTextureWagon(TextureWagon);
-	metro metro2 = metro(0, 2, 0, 0, 0, 2);
-	metro2.ChangementTextureWagon(TextureWagon);
-	metro metro3 = metro(0, 3, 0, 0, 0, 3);
-	metro3.ChangementTextureWagon(TextureWagon);
-
-	int size = liste_station.size(); //nombre de stations créées
-
-	bool stopped = false;
-	bool panne1 = false;
-	bool panne2 = false;
-	bool panne3 = false;
-
 	
-	
+	//Initialisation des voies de demi tour
+	sf::RectangleShape demi_tour1, demi_tour2;
+
+	//Initialisation et lancement du thread de la rame 1
 	std::jthread rame1(
 		[&stopped, &re, &liste_station, &size, &metro1, &metro2, &metro3, &posX_voie, &posY_voie1, &posY_voie2, &taille_voie, &taille_metro, &panne1, &panne2, &panne3]
 		{
@@ -383,8 +372,8 @@ int main()
 			}
 		}
 	);
-	//affichage sur une console :
 	
+	//Initialisation et lancement du thread de la rame 2
 	std::jthread rame2(
 		[&stopped, &re, &liste_station, &size, &metro1, &metro2, &metro3, &posX_voie, &posY_voie1, &posY_voie2, &taille_voie, &taille_metro, &panne1, &panne2, &panne3, &Col2, &Tab]
 		{
@@ -551,6 +540,7 @@ int main()
 		}
 	);
 	
+	//Initialisation et lancement du thread de la rame 3
 	std::jthread rame3(
 		[&stopped, &re, &liste_station, &size, &metro1, &metro2, &metro3, &posX_voie, &posY_voie1, &posY_voie2, &taille_voie, &taille_metro, &panne1, &panne2, &panne3, &Col3, &Tab]
 		{
@@ -718,17 +708,22 @@ int main()
 		}
 	);
 	
+	//Partie affichage Sur une Console :
 
+	//création d'une nouvelle console d'affichage
 	sf::RenderWindow window(sf::VideoMode(1600, 900), "Visualisation du métro Lillois");
 
+	//Modification de la texture des rames de métro
+	metro1.ChangementTextureWagon(TextureWagon);
+	metro2.ChangementTextureWagon(TextureWagon);
+	metro3.ChangementTextureWagon(TextureWagon);
 
-	sf::CircleShape AllerRetour1(30), AllerRetour2(30);
-	if (!TextureGare.loadFromFile(std::string("C:/Program Files/SFML/img/gare.png")))
-	{
-		cerr << "Erreur pendant le chargement des images" << endl;
-		//return EXIT_FAILURE;
-	}
-	//On mets à toutes les gares la même texture
+	//Modification de la taille des métros
+	metro1.ChangementTailleMetro(sf::Vector2f(0.1, 0.1));
+	metro2.ChangementTailleMetro(sf::Vector2f(0.1, 0.1));
+	metro3.ChangementTailleMetro(sf::Vector2f(0.1, 0.1));
+
+	//Modification de la texture , de la taille et de la position de chacune des gares
 	for (int i = 0; i < liste_station.size(); i++) {
 		liste_station[i].ChangementTextureGare(TextureGare);
 		liste_station[i].ChangementTailleGare(sf::Vector2f(0.1, 0.1));
@@ -736,13 +731,7 @@ int main()
 
 	}
 
-	//MaJ des positions et de la tailles des différentes gares
-	//Les gares :
-
-	metro1.ChangementTailleMetro(sf::Vector2f(0.1, 0.1));
-	metro2.ChangementTailleMetro(sf::Vector2f(0.1, 0.1));
-	metro3.ChangementTailleMetro(sf::Vector2f(0.1, 0.1));
-	//Mise à jour des positions des voies
+	//Mise à jour des positions des voies et de leurs tailles
 	for (int i = 0; i < 8; i++) {
 		liste_station[i].ChangementPositionVoie1(sf::Vector2f(posX_voie[i], posY_voie1));
 		liste_station[i].ChangementPositionVoie2(sf::Vector2f(posX_voie[i], posY_voie2));
@@ -750,8 +739,8 @@ int main()
 		liste_station[i].ChangementTailleVoie2(sf::Vector2f(2, taille_voie[i]));
 		liste_station[i].RotationVoie(270);
 	}
-	//Affichage des voies de demi tour
-	sf::RectangleShape demi_tour1, demi_tour2;
+
+	//Modification de la position et de la taille (du sens et de la couleur) des voies de demi tour
 	demi_tour1.setPosition(sf::Vector2f(PosXGare[0], PosYGare + 25));
 	demi_tour2.setPosition(sf::Vector2f(PosXGare[8] + 50, PosYGare + 25));
 	demi_tour1.setSize(sf::Vector2f(2, 90));
@@ -761,9 +750,10 @@ int main()
 	demi_tour1.setFillColor(sf::Color(0, 0, 0));
 	demi_tour2.setFillColor(sf::Color(0, 0, 0));
 
-
+	//Affichage  sur la console
 	while (window.isOpen())
 	{
+		//Création de l'évenement fermeture de la console
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
@@ -771,20 +761,25 @@ int main()
 				window.close();
 		}
 
+		//Réinitialisation de la console afin de pouvoir créer du mouvement
 		window.clear(sf::Color(255, 255, 255));
-		//Affichage des gares et des lignes de metro
-		//window.draw(AllerRetour1);
-		//window.draw(AllerRetour2);
+
+		//Affichage des gares ainsi que des voies entre elles
 		for (int i = 0; i < liste_station.size(); i++) {
 			liste_station[i].AffichageGare(window);
 			liste_station[i].AffichageVoies(window);
 		}
+
+		//Affichage des métros
 		metro1.AffichageMetro(window);
 		metro2.AffichageMetro(window);
 		metro3.AffichageMetro(window);
+
+		//Affichage des voies de demi tour
 		window.draw(demi_tour1);
 		window.draw(demi_tour2);
+
+		//Affichage de la console
 		window.display();
 	}
 }
-
