@@ -264,6 +264,7 @@ int main()
 					//S'il est dans le sens des gare croissants
 					if (metro1.reverse() == false) {
 						metro1.ChangementPositionMetro(sf::Vector2f(posX_voie[numero_station_suivante1 - 2] + pourcent * pow(10, -2) * taille_voie[numero_station_suivante1 - 2] - (taille_metro[0] * pow(10, -1)) / 2, posY_voie1 - taille_metro[1] * pow(10, -1)));
+						metro1.RotationMetro(0);
 					}
 					//S'il est dans le sens des gare décroissants
 					else { 
@@ -432,6 +433,7 @@ int main()
 					//S'il est dans le sens des gare croissants
 					if (metro2.reverse() == false) { 
 						metro2.ChangementPositionMetro(sf::Vector2f(posX_voie[numero_station_suivante2 - 2] + pourcent * pow(10, -2) * taille_voie[numero_station_suivante2 - 2] - (taille_metro[0] * pow(10, -1)) / 2, posY_voie1 - taille_metro[1] * pow(10, -1)));
+						metro2.RotationMetro(0);
 					}
 					//S'il est dans le sens des gare décroissants
 					else { 
@@ -598,7 +600,7 @@ int main()
 					//S'il est dans le sens des gare croissants
 					if (metro3.reverse() == false) { 
 						metro3.ChangementPositionMetro(sf::Vector2f(posX_voie[numero_station_suivante3 - 2] + pourcent * pow(10, -2) * taille_voie[numero_station_suivante3 - 2] - (taille_metro[0] * pow(10, -1)) / 2, posY_voie1 - taille_metro[1] * pow(10, -1)));
-
+						metro3.RotationMetro(0);
 					}
 					//S'il est dans le sens des gare décroissants
 					else { 
